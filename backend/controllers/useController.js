@@ -178,7 +178,7 @@ exports.deleteUser = async(req,res,next)=>{
 
 exports.changeUserRole = async(req,res,next)=>{
     try{
-        const user = await User.findById(req.body.id);
+        const user = await User.findById(req.params.id);
 
         if(!user){
            await res.status(500).send({success:false , message : "User not found."});
@@ -191,6 +191,20 @@ exports.changeUserRole = async(req,res,next)=>{
     await res.status(200).send({success:true , message : "User Role Updated successfully !!"})
 
     }catch(error){
+        await res.status(400).send({success : false , message : err.message});
+    }
+}
+
+exports.applySinger = async(req,res,next)=>{
+    try{
+        const user = await User.findById(req.user.id);
+
+      user.isAppliedForSinger = true;
+      await user.save();
+      await res.status(200).send({success:true , message : "You have Successfully applied for singer role"});
+
+
+    }catch(err){
         await res.status(400).send({success : false , message : err.message});
     }
 }

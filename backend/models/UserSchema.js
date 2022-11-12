@@ -27,10 +27,20 @@ const userSchema = new mongoose.Schema({
 			required: true,
 		},
 	},
+	isAppliedForSinger:{
+		type: Boolean,
+		default:false,
+	},
 	role: {
 		type: String,
 		default: "user",
 	},
+	mySongs : [{
+		id : {
+		    type:mongoose.Schema.ObjectId,
+		}     
+
+	}],
 	createdAt: {
 		type: Date,
 		default: Date.now,
