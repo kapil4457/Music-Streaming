@@ -6,8 +6,15 @@ const songSchema  = new mongoose.Schema({
         required : true
     },
     songLink :{
-        type:String,
-        required: true
+        public_url:{
+
+            type:String,
+            required: true
+        } ,
+        url :{
+            type:String,
+            required: true
+        }
     },
     artist:[
         {
@@ -17,6 +24,8 @@ const songSchema  = new mongoose.Schema({
             },
             id:{
                 type:mongoose.Schema.ObjectId,
+                type:String,
+                // default:"13425ytgefd",
                 required:true,
             }
 
@@ -28,8 +37,8 @@ const songSchema  = new mongoose.Schema({
         type:Number,
         default:0
     },
-    coverPoster :[
-        {
+    coverPoster :{
+        
             public_id:{
                 type:String,
                 required:true
@@ -39,8 +48,8 @@ const songSchema  = new mongoose.Schema({
                 type:String,
                 required:true
             }
-        }
-    ],
+        
+    },
     uploaded:{
         type:Date,
        required:true,

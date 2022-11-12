@@ -1,5 +1,5 @@
 const express = require("express");
-const { newSong ,deleteSong , updateLikes , getAllSong , getSingleSong, getAllSongsFromParticularSong } = require("../controllers/songController");
+const { newSong ,deleteSong , updateLikes , getAllSong , getSingleSong, getAllSongsFromParticularSinger } = require("../controllers/songController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth.js");
 
 
@@ -7,15 +7,15 @@ const router = express.Router();
 module.exports = router;
 
 
-router.route("/create/new").post(isAuthenticatedUser , authorizeRole("admin") , newSong)
+router.route("/create/song").post(isAuthenticatedUser , authorizeRole("singer") , newSong)
 
 
-router.route("/delete/song").delete(isAuthenticatedUser , authorizeRole("admin") , deleteSong)
+router.route("/delete/song/:id").delete(isAuthenticatedUser , authorizeRole("singer") , deleteSong)
 
-router.route("/update/likes").post(isAuthenticatedUser , authorizeRole("admin") , updateLikes)
+router.route("/update/likes/:id").put(isAuthenticatedUser  , updateLikes)
 
 router.route("/all/songs").get(getAllSong)
 
-router.route("/song/:name").get(getSingleSong)
+router.route("/song/:id").get(getSingleSong)
 
-router.route("/songs/:name").get(getAllSongsFromParticularSong)
+router.route("/songs/artist").get(getAllSongsFromParticularSinger)

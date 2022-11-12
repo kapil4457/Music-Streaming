@@ -45,6 +45,13 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
+	likedSongs:[
+		{
+			id : {
+				type:mongoose.Schema.ObjectId,
+			}
+		}
+	]
 	
 });
 
