@@ -15,7 +15,15 @@
     height:20rem;
     box-shadow:0 0 15px 0px rgba(0,0,0,0.5)  ;
 }
+.main_slider_outer_div > .main_slider_container>.slide{
+    display:flex;
+transition: all 0.3s;
+}
 
+.main_slider_outer_div > .main_slider_container>img{
+    height: 100%;
+    width:20rem;
+} 
     .main_slider_outer_div > .main_slider_container>svg{
         position:absolute;
     }
