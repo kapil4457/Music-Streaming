@@ -14,7 +14,7 @@ const Slider = () => {
   };
   const moveRight = () => {
     var tempTrans = transf + 20;
-    if (transf < 0) {
+    if (tempTrans < 0) {
       setTrans(tempTrans);
     } else {
       setTrans(0);
