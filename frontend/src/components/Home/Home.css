@@ -35,6 +35,7 @@
     }
     .main_home > .first_div>.left>h1>pre{
         color: rgb(49, 145, 255);
+        text-shadow:0 0 15px rgb(49, 145, 255);
 
     }
     .main_home > .first_div>.left>button{
@@ -62,3 +63,21 @@
         width:100% !important;
     }
 
+    .second_div{
+        display:flex;
+        flex-direction: column;
+        gap:2rem;
+    }
+
+    .second_div>.side_scroll{
+        display:flex;
+        flex-direction: column;
+        padding: 0 2rem;
+        gap:1rem;
+    }
+
+    .second_div >.side_scroll > h2{
+        font-size:2rem;
+      font-weight:550;
+      color:rgba(0,0,0,0.8);
+    }

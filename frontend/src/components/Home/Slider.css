@@ -1,0 +1,40 @@
+.main_slider_outer_div{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.main_slider_outer_div > .main_slider_container{
+    display:flex;
+    width:100%;
+    overflow: hidden;
+    border-radius: 10px;
+    position:relative;
+    height:20rem;
+    box-shadow:0 0 15px 0px rgba(0,0,0,0.5)  ;
+}
+
+    .main_slider_outer_div > .main_slider_container>svg{
+        position:absolute;
+    }
+    .main_slider_outer_div > .main_slider_container>.arrow{
+        font-size:3rem;
+        cursor:pointer;
+        z-index: 10;
+        color:white;
+        border-radius:50%;
+        background-color: rgba(0,0,0,0.4);
+        top:45%;
+        transition: all 0.5s;
+    }
+    .main_slider_outer_div > .main_slider_container>.arrow:hover{
+        background-color: rgba(0,0,0,0.9);
+    }
+    .main_slider_outer_div > .main_slider_container>.leftArrow{
+        left:2rem;
+    }
+    .main_slider_outer_div > .main_slider_container>.rightArrow{
+        right:2rem;
+    }
