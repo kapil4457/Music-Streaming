@@ -5,6 +5,16 @@ import PauseIcon from "@mui/icons-material/Pause";
 const SongPlay = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const swichMode = () => {
+    var temp = document.getElementsByClassName("loader_line");
+    if (isPlaying) {
+      for (var i = 0; i < temp.length; i++) {
+        temp.item(i).classList.remove("animation-loader");
+      }
+    } else {
+      for (var i = 0; i < temp.length; i++) {
+        temp.item(i).classList.add("animation-loader");
+      }
+    }
     setIsPlaying(!isPlaying);
   };
   return (
@@ -63,6 +73,16 @@ const SongPlay = () => {
                 <h2>Play</h2>
               </div>
             )}
+            <div className="music_bars">
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+              <div className="loader_line"></div>
+            </div>
           </div>
         </div>
         <div className="other_form_same_artist">

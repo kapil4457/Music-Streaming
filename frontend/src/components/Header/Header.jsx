@@ -2,13 +2,18 @@ import React from "react";
 import "./Header.css";
 import logo from "./Header_logo.png";
 import SearchIcon from "@mui/icons-material/Search";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import user from "./account.png";
+
 const Header = () => {
+  const navigate = useNavigate();
+  const push = () => {
+    navigate("/");
+  };
   return (
     <div className="main_header">
       <div className="left">
-        <img src={logo} alt="" />
+        <img src={logo} alt="" onClick={push} style={{ cursor: "pointer" }} />
       </div>
       <div className="right">
         <div className="search_bar">
