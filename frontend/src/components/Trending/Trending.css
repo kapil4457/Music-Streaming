@@ -1,0 +1,60 @@
+.main_trending{
+    width:100%;
+    padding:2rem 4rem ;
+    display:flex;
+    flex-direction: column;
+    gap:4rem;
+}
+.main_trending>h1{
+    font-weight:450;
+    font-size:3rem;
+    color:rgba(0,0,0,0.7);
+text-shadow: 0px 0px 6px rgba(0,0,0,0.6);
+
+}
+.main_trending>.trending_artists{
+    display:flex;
+    flex-direction: column;
+    gap:2rem;
+
+}
+.main_trending>.trending_artists>h2{
+    font-weight:450;
+    font-size:2rem;
+    text-decoration: underline;
+    color:rgba(0,0,0,0.7);
+}
+.main_trending>.trending_artists>.artist_cards{
+    display:flex;
+    gap:2rem;
+
+
+}
+    .main_trending>.trending_artists>.artist_cards>img{
+        height:8rem;
+        width:8rem;
+        border-radius:50%;
+        object-fit: cover;
+        box-shadow: 0 0 15px 0 rgba(0,0,0,0.4);
+        cursor:pointer;
+    }
+
+    .main_trending>.trending_songs{
+        display:flex;
+        flex-direction: column;
+        gap:2rem;
+    
+    }
+    .main_trending>.trending_songs>h2{
+        font-weight:450;
+        font-size:2rem;
+        text-decoration: underline;
+        color:rgba(0,0,0,0.7);
+    }
+
+
+        .main_trending>.trending_songs>.songs_play{
+            display: grid;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+          row-gap: 3rem;
+        }

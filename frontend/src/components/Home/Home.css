@@ -7,7 +7,7 @@
     display:grid;
     width:100%;
     grid-template-columns: 60% 1fr;
-    height:49rem;
+    height:50rem;
 }
 
 .main_home > .first_div>.right{

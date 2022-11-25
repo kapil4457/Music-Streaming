@@ -19,6 +19,7 @@
     "react-scripts": "5.0.1",
     "react-three-fiber": "^6.0.13",
     "redux": "^4.2.0",
+    "sass": "^1.56.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
