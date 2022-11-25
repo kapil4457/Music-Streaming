@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./SongPlay.css";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
+import Slider from "../Home/Slider";
+
 const SongPlay = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const swichMode = () => {
@@ -193,8 +195,10 @@ const SongPlay = () => {
           </div>
         </div>
       </div>
-      <div className="more_Song_From_Movie"></div>
-      <div className="recommended_Song"></div>
+      <div className="recommended_Song">
+        <h1>Recommended Songs</h1>
+        <Slider />
+      </div>
     </div>
   );
 };

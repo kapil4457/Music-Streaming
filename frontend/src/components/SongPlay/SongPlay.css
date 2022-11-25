@@ -1,11 +1,14 @@
 .main_songPlay{
     display:flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    padding:8rem;
+    gap:9rem;
 
 }
 .main_songPlay > .thisSong{
     display:flex;
     align-items: center;
-    padding:8rem;
     gap:5rem;
 }
 .main_songPlay>.thisSong>img{
@@ -216,6 +219,13 @@ padding:1rem 0;
         font-size: 0.9rem;
     }
 
+
+    .main_songPlay > .recommended_Song{
+        display:flex;
+        flex-direction: column;
+        gap:1rem;
+        color:rgba(0,0,0,0.6);
+        }
 
 
     @keyframes musicloader {
