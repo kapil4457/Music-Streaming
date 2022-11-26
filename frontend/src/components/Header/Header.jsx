@@ -41,6 +41,7 @@ const Header = () => {
 
   const searchFunc = (e) => {
     setKeyWord(e.target.value);
+    var temp = document.getElementById("search-bar");
     if (e.target.value !== "") {
       setRes(data);
     } else if (e.target.value === "") {
@@ -55,7 +56,12 @@ const Header = () => {
       <div className="right">
         <div className="search_bar">
           <div className="bar">
-            <input type="text" value={keyword} onChange={searchFunc} />
+            <input
+              type="text"
+              id="search-bar"
+              value={keyword}
+              onChange={searchFunc}
+            />
 
             <SearchIcon />
           </div>
