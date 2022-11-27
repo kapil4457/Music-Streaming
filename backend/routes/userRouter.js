@@ -7,8 +7,8 @@ const router = express.Router();
 module.exports = router;
 
 
-router.route("/register/user").post(registerUser)
-router.route("/login/user").post(loginUser);
+router.route("/register").post(registerUser)
+router.route("/login").post(loginUser);
 router.route("/logout").post(isAuthenticatedUser , logout);
 router.route("/user/details").get(isAuthenticatedUser , getUserDetails);
 router.route("/admin/users/all").get(isAuthenticatedUser , authorizeRole("admin") , getAllUsers);

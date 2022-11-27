@@ -1,0 +1,108 @@
+.main_account_page {
+  display: flex;
+  justify-content: left;
+  padding-left: 20rem;
+  min-height: 49rem;
+  position: relative;
+}
+
+.main_account_page > .first_part {
+  display: flex;
+  min-height: 45rem;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+.main_account_page > .first_part > img {
+  height: 30rem;
+  width: 30rem;
+  border-radius: 50%;
+  box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.6);
+  object-fit: cover;
+}
+
+.main_account_page > .first_part > .left_part_account {
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.main_account_page > .first_part > .left_part_account > h2 {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.main_account_page > .first_part > .left_part_account > button {
+  height: 3.5rem;
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+  cursor: pointer;
+  width: 20rem;
+  align-self: center;
+  margin-top: 4rem;
+  border: none;
+  outline: none;
+  font-weight: 550;
+  font-size: 1.5rem;
+}
+
+.main_account_page > .first_part > .updateCard {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+.main_account_page > .first_part > .updateCard > .card {
+  top: 10%;
+  height: 60%;
+  background-color: rgb(219, 194, 67);
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  justify-content: center;
+  padding: 2rem;
+  gap: 3rem;
+  border-radius: 10px;
+}
+
+.main_account_page > .first_part > .updateCard > .card > input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+  font-size: 2rem;
+}
+.main_account_page > .first_part > .updateCard > .card > svg {
+  position: absolute;
+  top: 10.5rem;
+  font-size: 2.5rem;
+  left: 71.5rem;
+  cursor: pointer;
+}
+
+.main_account_page > .first_part > .updateCard > .card > div {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.4rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.main_account_page > .first_part > .updateCard > .card > button {
+  height: 3rem;
+  font-size: 1.5rem;
+  width: 80%;
+  align-self: center;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: green;
+  color: white;
+}

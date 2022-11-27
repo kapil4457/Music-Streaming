@@ -9,6 +9,9 @@ import {
   LOAD_SUCCESS,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_REQUEST,
 } from "../Constants/userConstant";
 
 export const login = (info) => async (dispatch) => {
@@ -51,4 +54,15 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const updateUser = (info) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = axios.put("/api/v1/update/profile", info, config);
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.user });
+  } catch (e) {
+    dispatch({ type: UPDATE_PROFILE_FAIL, payload: e.response.data.message });
+  }
 };

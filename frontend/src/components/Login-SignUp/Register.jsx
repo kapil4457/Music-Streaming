@@ -52,19 +52,26 @@ const Register = () => {
         "https://api.cloudinary.com/v1_1/ds82kuoet/image/upload",
         formData
       );
-
+      toast("Please Wait...");
       setTimeout(() => {
         let thisData = {
           public_id: data.public_id,
           url: data.url,
         };
-        setUser({ ...user, avatar: thisData });
+        console.log(thisData);
         console.log(user);
+        toast("Registering your account...");
+        dispatch(
+          registerUser({
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            avatar: thisData,
+          })
+        );
 
-        dispatch(registerUser(user));
-      }, 3000);
-
-      navigate("/me");
+        navigate("/me");
+      }, 4000);
     } catch (e) {
       console.log(e);
       dispatch(clearErrors());
