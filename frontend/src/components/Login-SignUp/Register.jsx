@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { clearErrors, registerUser } from "../../redux/actions/userAction";
@@ -13,7 +14,7 @@ const Register = () => {
   const [file, setFiles] = useState(null);
   const [user, setUser] = useState({});
   const [ConfirmPassword, setConfirmPassword] = useState("");
-
+  const { error } = useSelector((state) => state.user);
   const handleFile = (e) => {
     const files = Array.from(e.target.files);
 
@@ -43,6 +44,10 @@ const Register = () => {
         toast("Please fill in all the details");
         return;
       }
+      if (!file) {
+        toast("Please select an image");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("file", file);
@@ -69,14 +74,24 @@ const Register = () => {
             avatar: thisData,
           })
         );
-
-        navigate("/me");
       }, 4000);
     } catch (e) {
       console.log(e);
       dispatch(clearErrors());
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      toast("User already exists.Try logging in");
+      dispatch(clearErrors());
+      return;
+    }
+
+    if (user) {
+      navigate("/me");
+    }
+  }, [error, user]);
   return (
     <>
       <div className="main_register">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Account.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -12,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 
 const Account = () => {
   const [display, setDisplay] = useState("none");
-  const user = useSelector((state) => state.user);
-  const [name, setName] = useState(user?.user?.name);
-  const [email, setEmail] = useState(user?.user?.email);
+  const { user } = useSelector((state) => state.user);
+  const { isUpdated } = useSelector((state) => state.userUpdate);
+  const [name, setName] = useState(user?.name);
+  const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,11 +36,12 @@ const Account = () => {
       reader.readAsDataURL(file);
     });
   };
+
   const updateUserFunc = async () => {
     try {
       if (file !== null) {
         // Deleting the previous profile pic
-        const public_id = user?.user?.avatar?.public_id;
+        const public_id = user?.avatar?.public_id;
         const timestamp = new Date().getTime();
         const string = `public_id=${public_id}&timestamp=${timestamp}tJfGYEl5F5FNZutSI0P1QWM6rI8`;
         const signature = await sha1(string);
@@ -68,8 +70,6 @@ const Account = () => {
             public_id: data.public_id,
             url: data.url,
           };
-          console.log(thisData);
-          console.log(user);
           toast("Updating your account...");
           dispatch(
             updateUser({
@@ -81,6 +81,7 @@ const Account = () => {
           toast("Account updated successfully");
           setDisplay("none");
           setTimeout(() => {
+            navigate("/");
             window.location.reload();
           }, 2000);
         }, 4000);
@@ -88,19 +89,24 @@ const Account = () => {
         const temp = {
           name: name,
           email: email,
-          avatar: user?.user?.avatar,
+          avatar: user?.avatar,
         };
 
         dispatch(updateUser(temp));
         toast("Profile updated successfully");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        navigate("/");
       }
     } catch (e) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user]);
+
   return (
     <div className="main_account_page">
       <div className="first_part">
@@ -130,10 +136,10 @@ const Account = () => {
             <button onClick={updateUserFunc}>Update</button>
           </div>
         </div>
-        <img src={user?.user?.avatar?.url} alt="" />
+        <img src={user?.avatar?.url} alt="" />
         <div className="left_part_account">
-          <h2>Name : {user?.user?.name}</h2>
-          <h2>Email : {user?.user?.email}</h2>
+          <h2>Name : {user?.name}</h2>
+          <h2>Email : {user?.email}</h2>
           <button
             onClick={() => {
               setDisplay("flex");

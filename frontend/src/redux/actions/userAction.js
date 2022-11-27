@@ -60,8 +60,11 @@ export const updateUser = (info) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_PROFILE_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = axios.put("/api/v1/update/profile", info, config);
-    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data.user });
+    const { user } = axios.put("/api/v1/update/profile", info, config);
+    dispatch({
+      type: UPDATE_PROFILE_SUCCESS,
+      payload: user,
+    });
   } catch (e) {
     dispatch({ type: UPDATE_PROFILE_FAIL, payload: e.response.data.message });
   }

@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import "./Header.css";
 import logo from "./Header_logo.png";
 import SearchIcon from "@mui/icons-material/Search";
-import { NavLink, useNavigate } from "react-router-dom";
-import user from "./account.png";
-import { useDispatch } from "react-redux";
-import { loadUser } from "../../redux/actions/userAction";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearErrors, loadUser } from "../../redux/actions/userAction";
 import { useEffect } from "react";
+import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const params = useParams();
+  const { user, error } = useSelector((state) => state.user);
+
   const data = [
     {
       name: "Kurta Pajama",
@@ -53,6 +59,17 @@ const Header = () => {
     }
   };
 
+  const logoutTrigger = async () => {
+    try {
+      const { data } = await axios.post("/api/v1/logout");
+      toast("Logged out successfully");
+      navigate("/");
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     dispatch(loadUser());
   }, []);
@@ -89,9 +106,32 @@ const Header = () => {
           <NavLink to="/favourites">Favourites</NavLink>
         </div>
         <div className="account_section">
-          <img src={user} alt="" />
+          {user ? (
+            <>
+              <img
+                src={user?.avatar?.url}
+                alt=""
+                onClick={() => {
+                  navigate("/me");
+                }}
+              />
+              <LogoutIcon onClick={logoutTrigger} />
+            </>
+          ) : (
+            <>
+              <button
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </button>
+            </>
+          )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
