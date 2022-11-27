@@ -4,8 +4,12 @@ import logo from "./Header_logo.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { NavLink, useNavigate } from "react-router-dom";
 import user from "./account.png";
+import { useDispatch } from "react-redux";
+import { loadUser } from "../../redux/actions/userAction";
+import { useEffect } from "react";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const data = [
     {
       name: "Kurta Pajama",
@@ -48,6 +52,10 @@ const Header = () => {
       setRes([]);
     }
   };
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, []);
   return (
     <div className="main_header">
       <div className="left">

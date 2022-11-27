@@ -1,9 +1,27 @@
 import React from "react";
 import "./Login.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { clearErrors, login } from "../../redux/actions/userAction";
+import { ToastContainer, toast } from "react-toastify";
+
 const Login = () => {
+  const dispatch = useDispatch();
   const [data, setData] = useState({});
+  const navigate = useNavigate();
+  const loginUser = () => {
+    if (!data.email || !data.password) {
+      toast("Please fill in all the details");
+      return;
+    }
+    try {
+      dispatch(login(data));
+      navigate("/");
+    } catch (e) {
+      dispatch(clearErrors());
+    }
+  };
   return (
     <div className="main_login">
       <div className="login_card">
@@ -21,12 +39,13 @@ const Login = () => {
           />
         </div>
         <div className="submit">
-          <button>Login</button>
+          <button onClick={loginUser}>Login</button>
           <p>
             New User? <NavLink to="/register">Register Now</NavLink>
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
