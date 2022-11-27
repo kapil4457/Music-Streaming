@@ -1,0 +1,63 @@
+.main_register{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    min-height:45rem;
+}
+
+.main_register>.register_card{
+    height:40rem;
+    width:30rem;
+    border-radius:10px;
+    display:flex;
+    flex-direction: column;
+    gap:3rem;
+    padding:2rem;
+    background-color: rgb(219,199,100);
+
+}
+    .main_register>.register_card>h1{
+        font-size:3rem;
+        align-self: center;
+        font-weight: 450;
+        color:rgba(0,0,0,0.6);
+        letter-spacing: 2px;
+    }
+        .main_register>.register_card>.inputs{
+            display: flex;
+            gap:3rem;
+            flex-direction: column;
+        }
+            .main_register>.register_card>.inputs>input{
+                background-color: transparent;
+                border:none;
+                outline:none;
+                font-size:1.5rem;
+                border-bottom:1px solid rgba(0,0,0,0.6);
+            }
+                .main_register>.register_card>.inputs>div{
+                    display:flex;
+                    flex-direction: column;
+                    font-size:1.5rem;
+
+                }
+                .main_register>.register_card>.submit{
+                    display:flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap:0.5rem;
+                }
+                    .main_register>.register_card>.submit>button{
+                        width:15rem;
+                        height:2.9rem;
+                        border:none;
+                        color:white;
+                        background-color: green;
+                        font-weight:450;
+                        border-radius:10px;
+                        font-size:1.5rem;
+                    }
+                        .main_register>.register_card>.submit>p>a{
+                            text-decoration: none;
+                            color:red;
+                        }

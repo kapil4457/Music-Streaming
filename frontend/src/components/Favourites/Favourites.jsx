@@ -4,10 +4,12 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PauseIcon from "@mui/icons-material/Pause";
 import { useState } from "react";
 
 const Favourites = () => {
   const [selectedSongs, setSelectedSongs] = useState(null);
+  const [isPlayListPaused, setIsPlayListPaused] = useState(true);
   const data = [
     {
       name: "disco",
@@ -155,7 +157,7 @@ const Favourites = () => {
                 <h2>{playlist.name}</h2>
               </div>
               <div className="rightIcons">
-                <PlayArrowIcon />
+                {isPlayListPaused ? <PlayArrowIcon /> : <PauseIcon />}
                 <DeleteIcon />
               </div>
             </div>

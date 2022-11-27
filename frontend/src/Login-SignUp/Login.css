@@ -1,0 +1,58 @@
+.main_login{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:45rem;
+}
+
+.main_login > .login_card{
+    height:30rem;
+    width:25rem;
+    border-radius:10px;
+    display:flex;
+    flex-direction: column;
+gap:4rem;
+padding:2rem;
+background-color: rgb(219,199,100);
+}
+    .main_login > .login_card>h1{
+        font-size:3rem;
+        align-self: center;
+        font-weight: 450;
+        color:rgba(0,0,0,0.6);
+        letter-spacing: 2px;
+    }
+        .main_login > .login_card>.inputs{
+            display: flex;
+            gap:3rem;
+            flex-direction: column;
+        }
+            .main_login > .login_card>.inputs>input{
+                background-color: transparent;
+                border:none;
+                outline:none;
+                font-size:1.5rem;
+                border-bottom:1px solid rgba(0,0,0,0.6);
+            }
+
+
+                .main_login > .login_card>.submit{
+                    display:flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap:0.5rem;
+                }
+                .main_login > .login_card>.submit>button{
+                    width:15rem;
+                    height:2.6rem;
+                    border:none;
+                    color:white;
+                    background-color: green;
+                    font-weight:450;
+                    border-radius:10px;
+                    font-size:1.5rem;
+                }
+                .main_login > .login_card>.submit>p>a{
+                    text-decoration: none;
+                    color:red;
+                }

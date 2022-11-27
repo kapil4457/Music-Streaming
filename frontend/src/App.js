@@ -7,6 +7,8 @@ import SongPlay from './components/SongPlay/SongPlay';
 import Trending from './components/Trending/Trending';
 import Latest from './components/Latest/Latest';
 import Favourites from './components/Favourites/Favourites';
+import Login from './Login-SignUp/Login';
+import Register from './Login-SignUp/Register';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
     <Route path="/trending" element={<Trending/>} />
     <Route path='/latest' element={<Latest />} />
     <Route path="/favourites" element={<Favourites />} />
+    <Route path="/login" element={<Login />} />
+    <Route path="/register" element={<Register />} />
     
      
      </Routes>
