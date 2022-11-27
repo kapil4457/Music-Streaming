@@ -12,11 +12,12 @@ import { useNavigate } from "react-router-dom";
 
 const Account = () => {
   const [display, setDisplay] = useState("none");
-  const { user } = useSelector((state) => state.user);
-  const { isUpdated } = useSelector((state) => state.userUpdate);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
+  const [prevClass, setPrevClass] = useState("one");
+  const [currentClass, setcurrentClass] = useState("one");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleFile = (e) => {
@@ -102,10 +103,15 @@ const Account = () => {
   };
 
   useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-  }, [user]);
+    var t = document.getElementById(currentClass);
+    t.classList.add("active_admin_dahboard");
+
+    setTimeout(() => {
+      if (!isAuthenticated) {
+        navigate("/");
+      }
+    }, 200);
+  }, [isAuthenticated]);
 
   return (
     <div className="main_account_page">
@@ -149,7 +155,54 @@ const Account = () => {
           </button>
         </div>
       </div>
-      <ToastContainer></ToastContainer>
+      <div className="second_part">
+        <h1>Admin Dashboard</h1>
+        <div className="admin_navbar">
+          <p
+            id="one"
+            onClick={() => {
+              var temp = document.getElementById("one");
+              if (prevClass) {
+                var temp2 = document.getElementById(prevClass);
+                temp2.classList.remove("active_admin_dahboard");
+              }
+              temp.classList.add("active_admin_dahboard");
+              setPrevClass("one");
+            }}
+          >
+            All Users
+          </p>
+          <p
+            id="two"
+            onClick={() => {
+              var temp = document.getElementById("two");
+              if (prevClass) {
+                var temp2 = document.getElementById(prevClass);
+                temp2.classList.remove("active_admin_dahboard");
+              }
+              temp.classList.add("active_admin_dahboard");
+              setPrevClass("two");
+            }}
+          >
+            All Songs
+          </p>
+          <p
+            id="three"
+            onClick={() => {
+              var temp = document.getElementById("three");
+              if (prevClass) {
+                var temp2 = document.getElementById(prevClass);
+                temp2.classList.remove("active_admin_dahboard");
+              }
+              temp.classList.add("active_admin_dahboard");
+              setPrevClass("three");
+            }}
+          >
+            Pending Requests
+          </p>
+        </div>
+      </div>
+      <ToastContainer />
     </div>
   );
 };

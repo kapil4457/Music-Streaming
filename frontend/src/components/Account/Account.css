@@ -1,9 +1,10 @@
 .main_account_page {
   display: flex;
   justify-content: left;
-  padding-left: 20rem;
   min-height: 49rem;
   position: relative;
+  flex-direction: column;
+  gap: 5rem;
 }
 
 .main_account_page > .first_part {
@@ -11,7 +12,7 @@
   min-height: 45rem;
   justify-content: center;
   align-items: center;
-  gap: 4rem;
+  gap: 5rem;
 }
 
 .main_account_page > .first_part > img {
@@ -105,4 +106,43 @@
   border-radius: 10px;
   background-color: green;
   color: white;
+}
+
+.main_account_page > .second_part {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10rem;
+  gap: 3rem;
+}
+
+.main_account_page > .second_part > h1 {
+  font-size: 3rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.main_account_page > .second_part > .admin_navbar {
+  display: flex;
+  width: 100%;
+  padding-right: 20rem;
+  justify-content: space-between;
+}
+
+.main_account_page > .second_part > .admin_navbar > p {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, 0.3);
+  width: 20rem;
+  height: 3.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.active_admin_dahboard {
+  background-color: rgb(219, 194, 67);
+  color: black !important;
 }
