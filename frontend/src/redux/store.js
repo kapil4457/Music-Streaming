@@ -1,15 +1,12 @@
-import {configureStore} from '@reduxjs/toolkit'
-import { userReducer } from './Reducers/userReducer'
+import { configureStore } from "@reduxjs/toolkit";
+import { userReducer } from "./Reducers/userReducer";
 
-
-
-export  default configureStore({
-    reducer:{
-        user:userReducer
-    },
-    middleware:(getDefaultMiddleware)=>
-        getDefaultMiddleware({
-            serializableCheck: false,
-          })
-    
-})
+export default configureStore({
+  reducer: {
+    user: userReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
