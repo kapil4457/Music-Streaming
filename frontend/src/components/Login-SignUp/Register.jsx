@@ -12,9 +12,9 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [file, setFiles] = useState(null);
-  const [user, setUser] = useState({});
+  const [userInfo, setUser] = useState({});
   const [ConfirmPassword, setConfirmPassword] = useState("");
-  const { error } = useSelector((state) => state.user);
+  const { error, user } = useSelector((state) => state.user);
   const handleFile = (e) => {
     const files = Array.from(e.target.files);
 
@@ -35,12 +35,12 @@ const Register = () => {
 
   const registerTrigger = async () => {
     try {
-      if (user.password != ConfirmPassword) {
+      if (userInfo.password != ConfirmPassword) {
         toast("Passwords do not match");
         return;
       }
 
-      if (!user.name || !user.email || !user.password) {
+      if (!userInfo.name || !userInfo.email || !userInfo.password) {
         toast("Please fill in all the details");
         return;
       }
@@ -64,17 +64,17 @@ const Register = () => {
           url: data.url,
         };
         console.log(thisData);
-        console.log(user);
+        console.log(userInfo);
         toast("Registering your account...");
         dispatch(
           registerUser({
-            name: user.name,
-            email: user.email,
-            password: user.password,
+            name: userInfo.name,
+            email: userInfo.email,
+            password: userInfo.password,
             avatar: thisData,
           })
         );
-      }, 4000);
+      }, 2000);
     } catch (e) {
       console.log(e);
       dispatch(clearErrors());
@@ -82,13 +82,14 @@ const Register = () => {
   };
 
   useEffect(() => {
+    dispatch(clearErrors());
     if (error) {
       toast("User already exists.Try logging in");
       dispatch(clearErrors());
       return;
     }
 
-    if (user) {
+    if (user != null) {
       navigate("/me");
     }
   }, [error, user]);
@@ -101,17 +102,19 @@ const Register = () => {
             <input
               type="text"
               placeholder="Enter your Name"
-              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              onChange={(e) => setUser({ ...userInfo, name: e.target.value })}
             />
             <input
               type="text"
               placeholder="Enter your Email"
-              onChange={(e) => setUser({ ...user, email: e.target.value })}
+              onChange={(e) => setUser({ ...userInfo, email: e.target.value })}
             />
             <input
               type="password"
               placeholder="Enter your Password"
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
+              onChange={(e) =>
+                setUser({ ...userInfo, password: e.target.value })
+              }
             />
             <input
               type="password"
@@ -128,7 +131,7 @@ const Register = () => {
           <div className="submit">
             <button onClick={registerTrigger}>Register</button>
             <p>
-              Already a User? <NavLink to="/login">Login Now</NavLink>
+              Already a userInfo? <NavLink to="/login">Login Now</NavLink>
             </p>
           </div>
         </div>

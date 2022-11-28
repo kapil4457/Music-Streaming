@@ -15,6 +15,9 @@ import {
   GET_ALL_USERS_ADMIN_REQUEST,
   GET_ALL_USERS_ADMIN_SUCCESS,
   GET_ALL_USERS_ADMIN_FAIL,
+  SINGER_APPLIED_USERS_REQUEST,
+  SINGER_APPLIED_USERS_SUCCESS,
+  SINGER_APPLIED_USERS_FAIL,
 } from "../Constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -111,6 +114,29 @@ export const getAllUsers = (state = {}, action) => {
       };
 
     case GET_ALL_USERS_ADMIN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getAllUserWhoAppliedForSinger = (state = {}, action) => {
+  switch (action.type) {
+    case SINGER_APPLIED_USERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SINGER_APPLIED_USERS_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+    case SINGER_APPLIED_USERS_FAIL:
       return {
         loading: false,
         error: action.payload,

@@ -205,3 +205,23 @@ exports.applySinger = async (req, res, next) => {
     await res.status(400).send({ success: false, message: err.message });
   }
 };
+
+exports.usersWhoAppliedForSinger = async (req, res, next) => {
+  try {
+    const users = await User.find({
+      $and: [
+        {
+          isAppliedForSinger: true,
+        },
+        { $or: [{ role: "admin" }, { role: "user" }] },
+      ],
+    });
+    await res.status(200).send({
+      success: true,
+      count: users.length,
+      users,
+    });
+  } catch (err) {
+    await res.status(400).send({ success: false, message: err.message });
+  }
+};

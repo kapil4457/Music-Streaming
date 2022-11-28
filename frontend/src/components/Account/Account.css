@@ -82,10 +82,10 @@
   font-size: 2rem;
 }
 .main_account_page > .first_part > .updateCard > .card > svg {
-  position: absolute;
-  top: 10.5rem;
+  position: fixed;
+  top: 3rem;
   font-size: 2.5rem;
-  left: 71.5rem;
+  right: 3rem;
   cursor: pointer;
 }
 
@@ -175,6 +175,12 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
 }
 
+.main_account_page > .second_part > .container > .allUsers > .card_blocks {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .main_account_page
   > .second_part
   > .container
@@ -198,6 +204,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 50px 0 0 50px;
+  border-right: 2px solid gray;
 }
 
 .main_account_page
@@ -368,7 +375,7 @@
 
 .main_account_page > .second_part > .container > .singer_approval > h1 {
   font-size: 2.5rem;
-  font-weight: 450;
+  font-weight: 550;
   color: rgba(0, 0, 0, 0.6);
 }
 

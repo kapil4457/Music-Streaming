@@ -3,7 +3,11 @@ import "./Account.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { getAllUsers, updateUser } from "../../redux/actions/userAction";
+import {
+  getAllUsers,
+  updateUser,
+  userAplliedForSingers,
+} from "../../redux/actions/userAction";
 import axios from "axios";
 import { sha1 } from "crypto-hash";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,12 +19,12 @@ const Account = () => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const { users } = useSelector((state) => state.allUsers);
   const { songs } = useSelector((state) => state.allSongs);
+  const singerApp = useSelector((state) => state.singerApplication);
   const [display, setDisplay] = useState("none");
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
   const [prevClass, setPrevClass] = useState("one");
-  const [approval, setApprovalCount] = useState(0);
   const [currentClass, setcurrentClass] = useState("one");
   const [pendingUser, setPendingUsers] = useState([]);
   const dispatch = useDispatch();
@@ -107,25 +111,11 @@ const Account = () => {
     }
   };
 
-  const countPendingApproval = async () => {
-    var userWhoApplied = [];
-    users?.users?.forEach((user) => {
-      if (
-        user?.role == "user" ||
-        (user?.role == "admin" && user?.isAppliedForSinger == true)
-      ) {
-        userWhoApplied.push(user);
-        setApprovalCount(approval + 1);
-      }
-    });
-    setPendingUsers(userWhoApplied);
-  };
-
   useEffect(() => {
     if (user?.role == "admin") {
       dispatch(getAllUsers());
       dispatch(getAllSongs());
-      countPendingApproval();
+      dispatch(userAplliedForSingers());
     }
 
     var t = document.getElementById(currentClass);
@@ -303,8 +293,8 @@ const Account = () => {
           )}
           {prevClass == "three" ? (
             <div className="singer_approval">
-              <h1>Pending Approval : {approval} </h1>
-              {pendingUser?.map((user) => (
+              <h1>Pending Approval : {singerApp?.users?.count} </h1>
+              {singerApp.users?.users?.map((user) => (
                 <div className="user_approval_card">
                   <img src={user?.avatar?.url} alt="" />
                   <div className="info">
