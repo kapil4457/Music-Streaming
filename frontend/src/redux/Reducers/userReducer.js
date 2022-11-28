@@ -12,6 +12,9 @@ import {
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_REQUEST,
+  GET_ALL_USERS_ADMIN_REQUEST,
+  GET_ALL_USERS_ADMIN_SUCCESS,
+  GET_ALL_USERS_ADMIN_FAIL,
 } from "../Constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -88,6 +91,31 @@ export const profileReducer = (state = {}, action) => {
         ...state,
         error: null,
       };
+    default:
+      return state;
+  }
+};
+
+export const getAllUsers = (state = {}, action) => {
+  switch (action.type) {
+    case GET_ALL_USERS_ADMIN_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_ALL_USERS_ADMIN_SUCCESS:
+      return {
+        loading: false,
+        users: action.payload,
+      };
+
+    case GET_ALL_USERS_ADMIN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
     default:
       return state;
   }

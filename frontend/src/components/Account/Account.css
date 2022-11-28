@@ -146,3 +146,139 @@
   background-color: rgb(219, 194, 67);
   color: black !important;
 }
+
+.main_account_page > .second_part > .container {
+  width: 90%;
+}
+
+.main_account_page > .second_part > .container > .allUsers {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+}
+.main_account_page > .second_part > .container > .allUsers > h2 {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card {
+  width: 60rem;
+  height: 10rem;
+  display: flex;
+  gap: 3rem;
+  border-radius: 50px;
+  background-color: rgb(219, 199, 100);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .user_info
+  > p {
+  font-size: 1.2rem;
+  font-weight: 550;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > img {
+  width: 15rem;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50px 0 0 50px;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .user_info {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .btns {
+  display: flex;
+  padding-left: 9rem;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .btns
+  > .del {
+  height: 30%;
+  width: 10rem;
+  font-weight: 550;
+  font-size: 1.2rem;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  border: 2px solid red;
+  color: white;
+  background-color: red;
+  border-radius: 10px;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .btns
+  > select {
+  width: 10rem;
+  height: 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0.4rem;
+  font-weight: 550;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .allUsers
+  > .card_blocks
+  > .user_card
+  > .btns
+  > select
+  > .opt {
+  font-size: 1.2rem;
+}

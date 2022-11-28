@@ -3,16 +3,17 @@ import "./Account.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { updateUser } from "../../redux/actions/userAction";
+import { getAllUsers, updateUser } from "../../redux/actions/userAction";
 import axios from "axios";
 import { sha1 } from "crypto-hash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-
+import DeleteIcon from "@mui/icons-material/Delete";
 const Account = () => {
-  const [display, setDisplay] = useState("none");
   const { user, isAuthenticated } = useSelector((state) => state.user);
+  const { users } = useSelector((state) => state.allUsers);
+  const [display, setDisplay] = useState("none");
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
@@ -103,6 +104,9 @@ const Account = () => {
   };
 
   useEffect(() => {
+    if (user?.role == "admin") {
+      dispatch(getAllUsers());
+    }
     var t = document.getElementById(currentClass);
     t.classList.add("active_admin_dahboard");
 
@@ -200,6 +204,59 @@ const Account = () => {
           >
             Pending Requests
           </p>
+        </div>
+
+        <div className="container">
+          <div className="allUsers">
+            <h2>User Count : {users?.userCount}</h2>
+            <div className="card_blocks">
+              {users?.users?.map((user, key) => (
+                <div className="user_card" key={key}>
+                  <img src={user?.avatar?.url} alt="" />
+                  <div className="user_info">
+                    <p>Name : {user?.name}</p>
+                    <p>Email : {user?.email}</p>
+                    <p>Role: {user?.role}</p>
+                    <p>Joined On : {user?.createdAt.substr(0, 10)}</p>
+                  </div>
+                  <div className="btns">
+                    <div className="del">
+                      <p>Delete</p>
+                      <DeleteIcon />
+                    </div>
+                    <select>
+                      <option value="" hidden className="opt">
+                        Update User Role
+                      </option>
+
+                      {user?.role == "admin" || user?.role == "singer" ? (
+                        <option value="user" className="opt">
+                          User
+                        </option>
+                      ) : (
+                        <></>
+                      )}
+
+                      {user?.role == "admin" || user?.role == "user" ? (
+                        <option value="singer" className="opt">
+                          Singer
+                        </option>
+                      ) : (
+                        <></>
+                      )}
+                      {user?.role == "singer" || user?.role == "user" ? (
+                        <option value="admin" className="opt">
+                          Admin
+                        </option>
+                      ) : (
+                        <></>
+                      )}
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       <ToastContainer />

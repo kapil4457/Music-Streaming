@@ -12,6 +12,9 @@ import {
   UPDATE_PROFILE_FAIL,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_REQUEST,
+  GET_ALL_USERS_ADMIN_FAIL,
+  GET_ALL_USERS_ADMIN_REQUEST,
+  GET_ALL_USERS_ADMIN_SUCCESS,
 } from "../Constants/userConstant";
 
 export const login = (info) => async (dispatch) => {
@@ -67,5 +70,18 @@ export const updateUser = (info) => async (dispatch) => {
     });
   } catch (e) {
     dispatch({ type: UPDATE_PROFILE_FAIL, payload: e.response.data.message });
+  }
+};
+
+export const getAllUsers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_USERS_ADMIN_REQUEST });
+    const { data } = await axios.get("/api/v1/admin/users/all");
+    dispatch({ type: GET_ALL_USERS_ADMIN_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: GET_ALL_USERS_ADMIN_FAIL,
+      payload: e.response.data.message,
+    });
   }
 };
