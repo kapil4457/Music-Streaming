@@ -282,3 +282,80 @@
   > .opt {
   font-size: 1.2rem;
 }
+
+.main_account_page > .second_part > .container > .all_songs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.main_account_page > .second_part > .container > .all_songs > .song_card {
+  width: 60rem;
+  height: 10rem;
+  display: flex;
+  gap: 3rem;
+  border-radius: 50px;
+  background-color: rgb(219, 199, 100);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.15);
+}
+
+.main_account_page > .second_part > .container > .all_songs > .song_card > img {
+  height: 100%;
+  width: 15rem;
+  border-radius: 50px 0 0 50px;
+  object-fit: cover;
+}
+
+.main_account_page > .second_part > .container > .all_songs > .song_card > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.main_account_page
+  > .second_part
+  > .container
+  > .all_songs
+  > .song_card
+  > div
+  > p {
+  font-size: 2rem;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .all_songs
+  > .song_card
+  > div
+  > .artists_container {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .all_songs
+  > .song_card
+  > div
+  > .artists_container
+  > p {
+  font-weight: 550;
+  font-size: 1.4rem;
+}
+
+.main_account_page
+  > .second_part
+  > .container
+  > .all_songs
+  > .song_card
+  > div
+  > .artists_container
+  > .artist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+}

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { songReducer } from "./Reducers/songReducer";
 import {
   getAllUsers,
   profileReducer,
@@ -10,6 +11,7 @@ export default configureStore({
     user: userReducer,
     userUpdate: profileReducer,
     allUsers: getAllUsers,
+    allSongs: songReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

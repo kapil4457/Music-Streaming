@@ -10,9 +10,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { getAllSongs } from "../../redux/actions/songAction";
 const Account = () => {
   const { user, isAuthenticated } = useSelector((state) => state.user);
   const { users } = useSelector((state) => state.allUsers);
+  const { songs } = useSelector((state) => state.allSongs);
   const [display, setDisplay] = useState("none");
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
@@ -106,7 +108,9 @@ const Account = () => {
   useEffect(() => {
     if (user?.role == "admin") {
       dispatch(getAllUsers());
+      dispatch(getAllSongs());
     }
+
     var t = document.getElementById(currentClass);
     t.classList.add("active_admin_dahboard");
 
@@ -207,56 +211,87 @@ const Account = () => {
         </div>
 
         <div className="container">
-          <div className="allUsers">
-            <h2>User Count : {users?.userCount}</h2>
-            <div className="card_blocks">
-              {users?.users?.map((user, key) => (
-                <div className="user_card" key={key}>
-                  <img src={user?.avatar?.url} alt="" />
-                  <div className="user_info">
-                    <p>Name : {user?.name}</p>
-                    <p>Email : {user?.email}</p>
-                    <p>Role: {user?.role}</p>
-                    <p>Joined On : {user?.createdAt.substr(0, 10)}</p>
-                  </div>
-                  <div className="btns">
-                    <div className="del">
-                      <p>Delete</p>
-                      <DeleteIcon />
+          {prevClass == "one" ? (
+            <div className="allUsers">
+              <h2>User Count : {users?.userCount}</h2>
+              <div className="card_blocks">
+                {users?.users?.map((user, key) => (
+                  <div className="user_card" key={key}>
+                    <img src={user?.avatar?.url} alt="" />
+                    <div className="user_info">
+                      <p>Name : {user?.name}</p>
+                      <p>Email : {user?.email}</p>
+                      <p>Role: {user?.role}</p>
+                      <p>Joined On : {user?.createdAt.substr(0, 10)}</p>
                     </div>
-                    <select>
-                      <option value="" hidden className="opt">
-                        Update User Role
-                      </option>
+                    <div className="btns">
+                      <div className="del">
+                        <p>Delete</p>
+                        <DeleteIcon />
+                      </div>
+                      <select>
+                        <option value="" hidden className="opt">
+                          Update User Role
+                        </option>
 
-                      {user?.role == "admin" || user?.role == "singer" ? (
-                        <option value="user" className="opt">
-                          User
-                        </option>
-                      ) : (
-                        <></>
-                      )}
+                        {user?.role == "admin" || user?.role == "singer" ? (
+                          <option value="user" className="opt">
+                            User
+                          </option>
+                        ) : (
+                          <></>
+                        )}
 
-                      {user?.role == "admin" || user?.role == "user" ? (
-                        <option value="singer" className="opt">
-                          Singer
-                        </option>
-                      ) : (
-                        <></>
-                      )}
-                      {user?.role == "singer" || user?.role == "user" ? (
-                        <option value="admin" className="opt">
-                          Admin
-                        </option>
-                      ) : (
-                        <></>
-                      )}
-                    </select>
+                        {user?.role == "admin" || user?.role == "user" ? (
+                          <option value="singer" className="opt">
+                            Singer
+                          </option>
+                        ) : (
+                          <></>
+                        )}
+                        {user?.role == "singer" || user?.role == "user" ? (
+                          <option value="admin" className="opt">
+                            Admin
+                          </option>
+                        ) : (
+                          <></>
+                        )}
+                      </select>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <></>
+          )}
+
+          {prevClass == "two" ? (
+            <div className="all_songs">
+              {songs?.allSongs?.map((song, k) => (
+                <div className="song_card" key={k}>
+                  {/* <img src={song?.coverPoster?.url} alt="" /> */}
+                  <img
+                    src="https://www.udiscovermusic.com/wp-content/uploads/2014/09/Best-Cover-Songs-Facebook-image.jpg"
+                    alt=""
+                  />
+                  <div>
+                    <p>Title : {song?.title}</p>
+                    <div className="artists_container">
+                      <p>Artists :</p>
+                      <div className="artist">
+                        {song?.artist?.map((artist, key) => (
+                          <p key={key}>{artist?.name}</p>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <ToastContainer />
