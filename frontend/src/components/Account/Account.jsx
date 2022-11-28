@@ -20,7 +20,9 @@ const Account = () => {
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
   const [prevClass, setPrevClass] = useState("one");
+  const [approval, setApprovalCount] = useState(0);
   const [currentClass, setcurrentClass] = useState("one");
+  const [pendingUser, setPendingUsers] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleFile = (e) => {
@@ -105,10 +107,25 @@ const Account = () => {
     }
   };
 
+  const countPendingApproval = async () => {
+    var userWhoApplied = [];
+    users?.users?.forEach((user) => {
+      if (
+        user?.role == "user" ||
+        (user?.role == "admin" && user?.isAppliedForSinger == true)
+      ) {
+        userWhoApplied.push(user);
+        setApprovalCount(approval + 1);
+      }
+    });
+    setPendingUsers(userWhoApplied);
+  };
+
   useEffect(() => {
     if (user?.role == "admin") {
       dispatch(getAllUsers());
       dispatch(getAllSongs());
+      countPendingApproval();
     }
 
     var t = document.getElementById(currentClass);
@@ -241,14 +258,6 @@ const Account = () => {
                         ) : (
                           <></>
                         )}
-
-                        {user?.role == "admin" || user?.role == "user" ? (
-                          <option value="singer" className="opt">
-                            Singer
-                          </option>
-                        ) : (
-                          <></>
-                        )}
                         {user?.role == "singer" || user?.role == "user" ? (
                           <option value="admin" className="opt">
                             Admin
@@ -286,6 +295,25 @@ const Account = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
+          {prevClass == "three" ? (
+            <div className="singer_approval">
+              <h1>Pending Approval : {approval} </h1>
+              {pendingUser?.map((user) => (
+                <div className="user_approval_card">
+                  <img src={user?.avatar?.url} alt="" />
+                  <div className="info">
+                    <p>Name : {user?.name}</p>
+                    <p>Email : {user?.email}</p>
+                    <p>Role : {user?.role}</p>
+                  </div>
+
+                  <button>Approve</button>
                 </div>
               ))}
             </div>
