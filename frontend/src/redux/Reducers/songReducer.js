@@ -9,6 +9,9 @@ import {
   CREATE_SONG_REQUEST,
   CREATE_SONG_SUCCESS,
   CREATE_SONG_FAIL,
+  DELETE_SONG_REQUEST,
+  DELETE_SONG_SUCCESS,
+  DELETE_SONG_FAIL,
 } from "../Constants/songConstant";
 
 export const songReducer = (state = {}, action) => {
@@ -84,12 +87,41 @@ export const createSong = (state = {}, action) => {
       return {
         loading: false,
         song: action.paload,
+        isCreated: true,
       };
 
     case CREATE_SONG_FAIL:
       return {
         loading: false,
+        isCreated: false,
         error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const deleteSong = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_SONG_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+
+    case DELETE_SONG_SUCCESS:
+      return {
+        loading: false,
+        song: action.paload,
+        isDeleted: true,
+      };
+
+    case DELETE_SONG_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+        isDeleted: false,
       };
 
     default:

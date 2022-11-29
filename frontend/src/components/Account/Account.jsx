@@ -18,6 +18,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
   createSong,
+  deleteSong,
   getAllSongs,
   getAllSongsFromParticularSinger,
 } from "../../redux/actions/songAction";
@@ -28,6 +29,8 @@ const Account = () => {
   const { songs } = useSelector((state) => state.allSongs);
   const mySongs = useSelector((state) => state.songFromParticularSinger);
   const singerApp = useSelector((state) => state.singerApplication);
+  const { isDeleted } = useSelector((state) => state.deleteSong);
+  const { isCreated } = useSelector((state) => state.createSong);
   const { data } = useSelector((state) => state.makeSinger);
   const [display, setDisplay] = useState("none");
   const [name, setName] = useState(user?.name);
@@ -164,6 +167,7 @@ const Account = () => {
       return;
     }
     toast("Please wait..It will take some time...");
+    toast("It may take upto 15 seconds");
 
     //Uploading the album cover
     const formData = new FormData();
@@ -205,6 +209,7 @@ const Account = () => {
       dispatch(createSong(songData));
     }, 7000);
   };
+
   useEffect(() => {
     if (user?.role == "admin") {
       dispatch(getAllUsers());
@@ -222,12 +227,19 @@ const Account = () => {
       temp.classList.add("active_singer_dashboard");
     }
 
+    if (isDeleted) {
+      toast("Song Deleted successfully");
+    }
+    if (isCreated) {
+      toast("Song Created successfully");
+    }
+
     setTimeout(() => {
       if (!isAuthenticated && loading == false) {
         navigate("/login");
       }
     }, 1000);
-  }, [isAuthenticated, data]);
+  }, [isAuthenticated, data, isDeleted, isCreated]);
 
   return (
     <>
@@ -487,14 +499,30 @@ const Account = () => {
                 <div className="content_space">
                   {currentClass1 == "my-songs" ? (
                     <div className="my-song-list">
-                      {mySongs?.songs?.songs.length == 0 ? (
+                      {mySongs?.songs?.songs?.length == 0 ? (
                         <div className="no-songs">
                           You do not have any songs yet
                         </div>
                       ) : (
                         <>
-                          {mySongs?.songs?.songs.map((song) => (
-                            <div>hii</div>
+                          {mySongs?.songs?.songs?.map((song) => (
+                            <div className="song_card_main">
+                              <img src={song?.coverPoster?.url} alt="" />
+                              <div className="info">
+                                <p>Title : {song?.title}</p>
+                                <p>Language : {song?.language}</p>
+                                <p>
+                                  Uploaded : {song?.uploaded?.substr(0, 10)}
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => {
+                                  dispatch(deleteSong({ id: song?._id }));
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
                           ))}
                         </>
                       )}

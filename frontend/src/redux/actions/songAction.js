@@ -10,6 +10,9 @@ import {
   CREATE_SONG_FAIL,
   CREATE_SONG_REQUEST,
   CREATE_SONG_SUCCESS,
+  DELETE_SONG_REQUEST,
+  DELETE_SONG_SUCCESS,
+  DELETE_SONG_FAIL,
 } from "../Constants/songConstant";
 
 export const getAllSongs = () => async (dispatch) => {
@@ -35,7 +38,11 @@ export const getAllSongsFromParticularSinger = (info) => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_SONGS_FROM_A_PARTICULAR_ARTIST_REQUEST });
     const config = { headers: { "Content-Type": "application/json" } };
-    const { data } = await axios.get("/api/v1/songs/artist", info, config);
+    const { data } = await axios.get(
+      `/api/v1/songs/artist/${info?.id}`,
+      config
+    );
+    console.log(data);
     dispatch({
       type: GET_ALL_SONGS_FROM_A_PARTICULAR_ARTIST_SUCCESS,
       payload: data,
@@ -57,5 +64,19 @@ export const createSong = (info) => async (dispatch) => {
     dispatch({ type: CREATE_SONG_SUCCESS, payload: data });
   } catch (e) {
     dispatch({ type: CREATE_SONG_FAIL, payload: e.response.data.message });
+  }
+};
+
+export const deleteSong = (info) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_SONG_REQUEST });
+    const { data } = await axios.delete(`/api/v1/delete/song/${info.id}`);
+    console.log(data);
+    dispatch({ type: DELETE_SONG_SUCCESS, payload: data, isDeleted: true });
+  } catch (e) {
+    dispatch({
+      type: DELETE_SONG_FAIL,
+      error: e.response.data.message,
+    });
   }
 };

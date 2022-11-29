@@ -488,9 +488,76 @@
 .main_account_page > .singer_dashboard > .content_space > .my-song-list {
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  flex-direction: column;
+  gap: 2rem;
+}
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .my-song-list
+  > .song_card_main {
+  height: 10rem;
+  background-color: rgb(103, 142, 228);
+  display: flex;
+  gap: 2rem;
+  max-width: 60rem;
+  border-radius: 30px;
+}
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .my-song-list
+  > .song_card_main
+  > img {
+  height: 100%;
+  width: 15rem;
+  border-radius: 30px 0 0 30px;
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .my-song-list
+  > .song_card_main
+  > .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: 550;
+  justify-content: center;
+  min-width: 27rem;
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .my-song-list
+  > .song_card_main
+  > button {
+  height: 50%;
+  align-self: center;
+  width: 10rem;
+  font-size: 1.6rem;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  color: red;
+  cursor: pointer;
+  border: 2px solid red;
+  font-weight: 550;
+  transition: all 0.4s;
+}
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .my-song-list
+  > .song_card_main
+  > button:hover {
+  background-color: red;
+  color: white;
 }
 .main_account_page > .singer_dashboard > .content_space {
   width: 100%;
@@ -511,7 +578,9 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  padding: 4rem;
+  padding-top: 4rem;
+  padding-left: 4rem;
+  padding-right: 2rem;
   background-color: rgb(219, 199, 100);
   border-radius: 20px;
   height: 35rem;
@@ -551,7 +620,7 @@
   > .create_song_block
   > .create_song_form
   > button {
-  height: 3rem;
+  height: 4rem;
   width: 20rem;
   align-self: center;
   font-size: 1.5rem;

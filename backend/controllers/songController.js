@@ -87,9 +87,14 @@ exports.getSingleSong = async (req, res, next) => {
 
 exports.getAllSongsFromParticularSinger = async (req, res, next) => {
   try {
-    const songs = await Song.find({
-      artist: { $in: [{ name: req.body.name, id: req.body.id }] },
-    });
+    const user = await User.findById(req.params.id);
+    const songs = [];
+    for (var i = 0; i < user?.mySongs?.length; i++) {
+      const song = await Song.findById(user?.mySongs[i]?.id);
+      if (song) {
+        songs.push(song);
+      }
+    }
     await res.status(200).json({ success: true, songs });
   } catch (err) {
     await res.status(500).send({ success: false, message: err.message });
