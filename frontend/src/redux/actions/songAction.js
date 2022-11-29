@@ -19,6 +19,9 @@ import {
   ADD_SONG_TO_FAVOURITES_FAIL,
   ADD_SONG_TO_FAVOURITES_REQUEST,
   ADD_SONG_TO_FAVOURITES_SUCCESS,
+  GET_TRENDING_SONGS_REQUEST,
+  GET_TRENDING_SONGS_FAIL,
+  GET_TRENDING_SONGS_SUCCESS,
 } from "../Constants/songConstant";
 
 export const getAllSongs = () => async (dispatch) => {
@@ -95,6 +98,18 @@ export const getLatestSongs = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_LATEST_SONGS_FAIL,
+      error: e.response.data.message,
+    });
+  }
+};
+export const getTrendingSongs = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_TRENDING_SONGS_REQUEST });
+    const { data } = await axios.get(`/api/v1/trending/songs`);
+    dispatch({ type: GET_TRENDING_SONGS_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: GET_TRENDING_SONGS_FAIL,
       error: e.response.data.message,
     });
   }

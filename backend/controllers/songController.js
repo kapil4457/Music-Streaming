@@ -128,7 +128,16 @@ exports.getAllSongsFromParticularSinger = async (req, res, next) => {
 
 exports.getLatestSongs = async (req, res, next) => {
   try {
-    const songs = await Song.find().limit(30);
+    const songs = await Song.find().sort({ uploaded: -1 });
+    await res.status(200).json({ success: true, songs });
+  } catch (err) {
+    await res.status(400).send({ success: false, message: err.message });
+  }
+};
+
+exports.getTrendingSongs = async (req, res, next) => {
+  try {
+    const songs = await Song.find({}).sort({ likes: -1 });
     await res.status(200).json({ success: true, songs });
   } catch (err) {
     await res.status(400).send({ success: false, message: err.message });

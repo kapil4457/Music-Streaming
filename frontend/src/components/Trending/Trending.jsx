@@ -3,11 +3,14 @@ import MainCard from "../MainCard/MainCard";
 import "./Trending.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getLatestSingers } from "../../redux/actions/userAction";
-import { getLatestSongs } from "../../redux/actions/songAction";
+import {
+  getLatestSongs,
+  getTrendingSongs,
+} from "../../redux/actions/songAction";
 
 const Trending = () => {
   const { singers } = useSelector((state) => state.latestSinger);
-  const { latestSongs } = useSelector((state) => state.latestSongs);
+  const { trendingSongs } = useSelector((state) => state.trendingSongs);
   const dispatch = useDispatch();
   const [artistSel, setArtistSel] = useState(null);
 
@@ -25,7 +28,7 @@ const Trending = () => {
   };
   useEffect(() => {
     dispatch(getLatestSingers());
-    dispatch(getLatestSongs());
+    dispatch(getTrendingSongs());
   }, []);
   return (
     <div className="main_trending">
@@ -50,7 +53,7 @@ const Trending = () => {
       <div className="trending_songs">
         <h2>Trending Songs</h2>
         <div className="songs_play">
-          {latestSongs?.songs?.filter(filtering)?.map((song, key) => (
+          {trendingSongs?.songs?.filter(filtering)?.map((song, key) => (
             <MainCard key={key} data={song} />
           ))}
         </div>

@@ -18,6 +18,9 @@ import {
   ADD_SONG_TO_FAVOURITES_REQUEST,
   ADD_SONG_TO_FAVOURITES_SUCCESS,
   ADD_SONG_TO_FAVOURITES_FAIL,
+  GET_TRENDING_SONGS_REQUEST,
+  GET_TRENDING_SONGS_SUCCESS,
+  GET_TRENDING_SONGS_FAIL,
 } from "../Constants/songConstant";
 
 export const songReducer = (state = {}, action) => {
@@ -177,6 +180,30 @@ export const updateLikes = (state = {}, action) => {
       return {
         loading: false,
         isUpdated: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const trendingSongs = (state = {}, action) => {
+  switch (action.type) {
+    case GET_TRENDING_SONGS_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+    case GET_TRENDING_SONGS_SUCCESS:
+      return {
+        loading: false,
+        trendingSongs: action.payload,
+      };
+
+    case GET_TRENDING_SONGS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     default:

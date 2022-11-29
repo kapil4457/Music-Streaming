@@ -5,6 +5,7 @@ import PauseIcon from "@mui/icons-material/Pause";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import { addToFav } from "../../redux/actions/songAction";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 const MainCard = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const MainCard = ({ data }) => {
       type: "up",
     };
     dispatch(addToFav(info));
+    toast("Added to Favourites!!");
   };
   return (
     <div className="main_card_container">
@@ -61,6 +63,7 @@ const MainCard = ({ data }) => {
           <div className={`loader_line ${data?._id}`}></div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
