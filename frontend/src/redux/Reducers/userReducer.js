@@ -21,6 +21,9 @@ import {
   ACCEPT_SINGER_APPLICATION_REQUEST,
   ACCEPT_SINGER_APPLICATION_SUCCESS,
   ACCEPT_SINGER_APPLICATION_FAIL,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
 } from "../Constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -172,5 +175,27 @@ export const makeSinger = (state = {}, action) => {
 
     default:
       return state;
+  }
+};
+
+export const deleteUser = (state = {}, action) => {
+  switch (action.type) {
+    case DELETE_USER_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+
+    case DELETE_USER_SUCCESS:
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case DELETE_USER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
   }
 };

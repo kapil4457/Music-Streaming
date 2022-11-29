@@ -129,5 +129,10 @@ export const makeSinger = (user) => async (dispatch) => {
 
 export const deleteUser = (user) => (dispatch) => {
   try {
-  } catch (e) {}
+    dispatch({ type: DELETE_USER_REQUEST });
+    const { data } = axios.delete(`/api/v1/admin/delete/${user?._id}`);
+    dispatch({ type: DELETE_USER_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({ type: DELETE_USER_FAIL, payload: e.response.data.message });
+  }
 };

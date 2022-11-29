@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { deleteUser } from "./actions/userAction";
 import { songReducer } from "./Reducers/songReducer";
 import {
   getAllUsers,
@@ -16,6 +17,7 @@ export default configureStore({
     allSongs: songReducer,
     singerApplication: getAllUserWhoAppliedForSinger,
     makeSinger: makeSinger,
+    deleteUser: deleteUser,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
