@@ -3,12 +3,14 @@ import { deleteUser } from "./actions/userAction";
 import {
   createSong,
   deleteSong,
+  getLatestSongs,
   songFromArtistReducer,
   songReducer,
 } from "./Reducers/songReducer";
 import {
   getAllUsers,
   getAllUserWhoAppliedForSinger,
+  getLatestArtists,
   makeSinger,
   profileReducer,
   userReducer,
@@ -26,6 +28,8 @@ export default configureStore({
     deleteUser: deleteUser,
     createSong: createSong,
     deleteSong: deleteSong,
+    latestSinger: getLatestArtists,
+    latestSongs: getLatestSongs,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

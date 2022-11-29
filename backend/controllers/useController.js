@@ -227,3 +227,17 @@ exports.usersWhoAppliedForSinger = async (req, res, next) => {
     await res.status(400).send({ success: false, message: err.message });
   }
 };
+
+//get latest artists
+
+exports.latestArtists = async (req, res, next) => {
+  try {
+    const users = await User.find({ role: "singer" }).limit(8);
+    await res.status(200).send({
+      success: true,
+      users,
+    });
+  } catch (err) {
+    await res.status(400).send({ success: false, message: err.message });
+  }
+};

@@ -24,6 +24,9 @@ import {
   DELETE_USER_REQUEST,
   DELETE_USER_SUCCESS,
   DELETE_USER_FAIL,
+  GET_LATEST_ARTISTS_REQUEST,
+  GET_LATEST_ARTIST_SUCCESS,
+  GET_LATEST_ARTIST_FAIL,
 } from "../Constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -197,5 +200,28 @@ export const deleteUser = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
+  }
+};
+
+export const getLatestArtists = (state = {}, action) => {
+  switch (action.type) {
+    case GET_LATEST_ARTISTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_LATEST_ARTIST_SUCCESS:
+      return {
+        loading: false,
+        singers: action.payload,
+      };
+    case GET_LATEST_ARTIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
   }
 };

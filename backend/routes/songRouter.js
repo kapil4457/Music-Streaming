@@ -6,6 +6,7 @@ const {
   getAllSong,
   getSingleSong,
   getAllSongsFromParticularSinger,
+  getLatestSongs,
 } = require("../controllers/songController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth.js");
 
@@ -27,3 +28,4 @@ router.route("/all/songs").get(getAllSong);
 router.route("/song/:id").get(getSingleSong);
 
 router.route("/songs/artist/:id").get(getAllSongsFromParticularSinger);
+router.route("/latest/songs").get(getLatestSongs);

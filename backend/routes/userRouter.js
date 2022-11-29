@@ -11,6 +11,7 @@ const {
   changeUserRole,
   applySinger,
   usersWhoAppliedForSinger,
+  latestArtists,
 } = require("../controllers/useController.js");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth.js");
 
@@ -38,3 +39,4 @@ router
 router
   .route("/apply/singer")
   .put(isAuthenticatedUser, authorizeRole("user"), applySinger);
+router.route("/latest/singer").get(latestArtists);

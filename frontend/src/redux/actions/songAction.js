@@ -13,6 +13,9 @@ import {
   DELETE_SONG_REQUEST,
   DELETE_SONG_SUCCESS,
   DELETE_SONG_FAIL,
+  GET_LATEST_SONGS_REQUEST,
+  GET_LATEST_SONGS_SUCCESS,
+  GET_LATEST_SONGS_FAIL,
 } from "../Constants/songConstant";
 
 export const getAllSongs = () => async (dispatch) => {
@@ -76,6 +79,19 @@ export const deleteSong = (info) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: DELETE_SONG_FAIL,
+      error: e.response.data.message,
+    });
+  }
+};
+
+export const getLatestSongs = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_LATEST_SONGS_REQUEST });
+    const { data } = await axios.get(`/api/v1/latest/songs`);
+    dispatch({ type: GET_LATEST_SONGS_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: GET_LATEST_SONGS_FAIL,
       error: e.response.data.message,
     });
   }

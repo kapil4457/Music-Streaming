@@ -12,6 +12,9 @@ import {
   DELETE_SONG_REQUEST,
   DELETE_SONG_SUCCESS,
   DELETE_SONG_FAIL,
+  GET_LATEST_SONGS_REQUEST,
+  GET_LATEST_SONGS_SUCCESS,
+  GET_LATEST_SONGS_FAIL,
 } from "../Constants/songConstant";
 
 export const songReducer = (state = {}, action) => {
@@ -122,6 +125,31 @@ export const deleteSong = (state = {}, action) => {
         loading: false,
         error: action.payload,
         isDeleted: false,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const getLatestSongs = (state = {}, action) => {
+  switch (action.type) {
+    case GET_LATEST_SONGS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case GET_LATEST_SONGS_SUCCESS:
+      return {
+        loading: false,
+        latestSongs: action.payload,
+      };
+
+    case GET_LATEST_SONGS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     default:

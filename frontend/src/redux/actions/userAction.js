@@ -24,6 +24,9 @@ import {
   DELETE_USER_FAIL,
   DELETE_USER_SUCCESS,
   DELETE_USER_REQUEST,
+  GET_LATEST_ARTISTS_REQUEST,
+  GET_LATEST_ARTIST_SUCCESS,
+  GET_LATEST_ARTIST_FAIL,
 } from "../Constants/userConstant";
 
 export const login = (info) => async (dispatch) => {
@@ -134,5 +137,18 @@ export const deleteUser = (user) => (dispatch) => {
     dispatch({ type: DELETE_USER_SUCCESS, payload: data });
   } catch (e) {
     dispatch({ type: DELETE_USER_FAIL, payload: e.response.data.message });
+  }
+};
+
+export const getLatestSingers = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_LATEST_ARTISTS_REQUEST });
+    const { data } = await axios.get("/api/v1/latest/singer");
+    dispatch({ type: GET_LATEST_ARTIST_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: GET_LATEST_ARTIST_FAIL,
+      payload: e.response.data.message,
+    });
   }
 };
