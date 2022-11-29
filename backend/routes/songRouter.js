@@ -8,6 +8,7 @@ const {
   getAllSongsFromParticularSinger,
   getLatestSongs,
   getTrendingSongs,
+  getFavourites,
 } = require("../controllers/songController");
 const { isAuthenticatedUser, authorizeRole } = require("../middleware/auth.js");
 
@@ -31,3 +32,4 @@ router.route("/song/:id").get(getSingleSong);
 router.route("/songs/artist/:id").get(getAllSongsFromParticularSinger);
 router.route("/latest/songs").get(getLatestSongs);
 router.route("/trending/songs").get(getTrendingSongs);
+router.route("/favourites/songs/:id").get(getFavourites);

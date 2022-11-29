@@ -143,3 +143,21 @@ exports.getTrendingSongs = async (req, res, next) => {
     await res.status(400).send({ success: false, message: err.message });
   }
 };
+
+exports.getFavourites = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const favSongs = [];
+    for (var i = 0; i < user?.likedSongs?.length; i++) {
+      console.log(user?.likedSongs[i].id);
+      const song = await Song.findById(user?.likedSongs[i].id);
+      if (song) {
+        favSongs.push(song);
+      }
+    }
+    console.log(favSongs);
+    await res.status(200).json({ success: true, favSongs });
+  } catch (err) {
+    await res.status(400).send({ success: false, message: err.message });
+  }
+};

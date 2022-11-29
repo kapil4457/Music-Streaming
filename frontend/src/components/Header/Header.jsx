@@ -115,7 +115,10 @@ const Header = () => {
                   navigate("/me");
                 }}
               />
-              <LogoutIcon onClick={logoutTrigger} />
+              <LogoutIcon
+                onClick={logoutTrigger}
+                style={{ cursor: "pointer" }}
+              />
             </>
           ) : (
             <>

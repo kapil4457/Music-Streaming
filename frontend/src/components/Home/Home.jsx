@@ -2,8 +2,11 @@ import React from "react";
 import { Suspense } from "react";
 import { Model } from "../../models/Final";
 import { Canvas } from "react-three-fiber";
+
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <div className="main_home">
       <div className="first_div">
@@ -11,7 +14,13 @@ const Home = () => {
           <h1>
             Enjoy Unlimited ad-free music for<pre> Free</pre>
           </h1>
-          <button>Start Listening</button>
+          <button
+            onClick={() => {
+              navigate("/trending");
+            }}
+          >
+            Start Listening
+          </button>
         </div>
         <div className="right">
           <Canvas>

@@ -6,10 +6,16 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PauseIcon from "@mui/icons-material/Pause";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getFavouriteSongs } from "../../redux/actions/songAction";
 
 const Favourites = () => {
   const [selectedSongs, setSelectedSongs] = useState(null);
+  const { user, error, loading } = useSelector((state) => state.user);
+  const { favSongs } = useSelector((state) => state.favouriteSongs);
   const [isPlayListPaused, setIsPlayListPaused] = useState(true);
+  const dispatch = useDispatch();
   const data = [
     {
       name: "disco",
@@ -136,6 +142,11 @@ const Favourites = () => {
       ],
     },
   ];
+  useEffect(() => {
+    if (loading == false) {
+      dispatch(getFavouriteSongs({ id: user?._id }));
+    }
+  }, [loading]);
   return (
     <div className="favourites_main">
       <div className="head">

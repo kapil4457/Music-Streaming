@@ -21,6 +21,9 @@ import {
   GET_TRENDING_SONGS_REQUEST,
   GET_TRENDING_SONGS_SUCCESS,
   GET_TRENDING_SONGS_FAIL,
+  GET_FAVOURITE_SONGS_FAIL,
+  GET_FAVOURITE_SONGS_REQUEST,
+  GET_FAVOURITE_SONGS_SUCCESS,
 } from "../Constants/songConstant";
 
 export const songReducer = (state = {}, action) => {
@@ -201,6 +204,30 @@ export const trendingSongs = (state = {}, action) => {
       };
 
     case GET_TRENDING_SONGS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const favouriteSongs = (state = {}, action) => {
+  switch (action.type) {
+    case GET_FAVOURITE_SONGS_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+    case GET_FAVOURITE_SONGS_SUCCESS:
+      return {
+        loading: false,
+        favSongs: action.payload,
+      };
+
+    case GET_FAVOURITE_SONGS_FAIL:
       return {
         loading: false,
         error: action.payload,

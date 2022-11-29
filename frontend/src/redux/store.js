@@ -8,6 +8,7 @@ import {
   songReducer,
   trendingSongs,
   updateLikes,
+  favouriteSongs,
 } from "./Reducers/songReducer";
 import {
   getAllUsers,
@@ -34,6 +35,7 @@ export default configureStore({
     latestSongs: getLatestSongs,
     updateLikes: updateLikes,
     trendingSongs: trendingSongs,
+    favouriteSongs: favouriteSongs,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

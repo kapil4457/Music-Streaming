@@ -28,9 +28,9 @@ const Latest = () => {
   }, []);
   return (
     <div className="main_trending">
-      <h1>Trending</h1>
+      <h1>Latest</h1>
       <div className="trending_artists">
-        <h2> Trending Artists</h2>
+        <h2> Latest Artists</h2>
         <div className="artist_cards">
           {singers?.users?.map((singer, key) => (
             <>
@@ -47,7 +47,7 @@ const Latest = () => {
         </div>
       </div>
       <div className="trending_songs">
-        <h2>Trending Songs</h2>
+        <h2>Latest Songs</h2>
         <div className="songs_play">
           {latestSongs?.songs?.filter(filtering)?.map((song, key) => (
             <MainCard key={key} data={song} />
