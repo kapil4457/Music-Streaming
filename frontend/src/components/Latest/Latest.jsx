@@ -1,71 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainCard from "../MainCard/MainCard";
 import "../Trending/Trending.css";
-
+import { useSelector, useDispatch } from "react-redux";
+import { getLatestSingers } from "../../redux/actions/userAction";
+import { getLatestSongs } from "../../redux/actions/songAction";
 const Latest = () => {
+  const { singers } = useSelector((state) => state.latestSinger);
+  const { latestSongs } = useSelector((state) => state.latestSongs);
+  const dispatch = useDispatch();
+  const [artistSel, setArtistSel] = useState(null);
+
+  const filtering = (e) => {
+    if (!artistSel) {
+      return true;
+    } else {
+      if (artistSel?.name === e?.artist[0]?.name) {
+        return true;
+      } else {
+        console.log("no");
+        return false;
+      }
+    }
+  };
+  useEffect(() => {
+    dispatch(getLatestSingers());
+    dispatch(getLatestSongs());
+  }, []);
   return (
     <div className="main_trending">
-      <h1>Latest</h1>
+      <h1>Trending</h1>
       <div className="trending_artists">
-        <h2> Latest Artists</h2>
+        <h2> Trending Artists</h2>
         <div className="artist_cards">
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
-          <img
-            src="https://images.hindustantimes.com/img/2021/12/03/1600x900/759d7636-5363-11ec-997e-74ec8c0ca0c9_1638506926420.jpg"
-            alt=""
-          />
+          {singers?.users?.map((singer, key) => (
+            <>
+              <img
+                key={key}
+                src={singer?.avatar?.url}
+                onClick={() => {
+                  setArtistSel(singer);
+                }}
+                alt=""
+              />
+            </>
+          ))}
         </div>
       </div>
       <div className="trending_songs">
-        <h2>Latest Songs</h2>
+        <h2>Trending Songs</h2>
         <div className="songs_play">
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
-          <MainCard />
+          {latestSongs?.songs?.filter(filtering)?.map((song, key) => (
+            <MainCard key={key} data={song} />
+          ))}
         </div>
       </div>
     </div>
