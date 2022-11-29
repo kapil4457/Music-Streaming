@@ -5,6 +5,7 @@ import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import {
   getAllUsers,
+  makeSinger,
   updateUser,
   userAplliedForSingers,
 } from "../../redux/actions/userAction";
@@ -20,13 +21,13 @@ const Account = () => {
   const { users } = useSelector((state) => state.allUsers);
   const { songs } = useSelector((state) => state.allSongs);
   const singerApp = useSelector((state) => state.singerApplication);
+  const { data } = useSelector((state) => state.makeSinger);
   const [display, setDisplay] = useState("none");
   const [name, setName] = useState(user?.name);
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
   const [prevClass, setPrevClass] = useState("one");
   const [currentClass, setcurrentClass] = useState("one");
-  const [pendingUser, setPendingUsers] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleFile = (e) => {
@@ -116,17 +117,17 @@ const Account = () => {
       dispatch(getAllUsers());
       dispatch(getAllSongs());
       dispatch(userAplliedForSingers());
-    }
 
-    var t = document.getElementById(currentClass);
-    t.classList.add("active_admin_dahboard");
+      var t = document.getElementById(currentClass);
+      t.classList.add("active_admin_dahboard");
+    }
 
     setTimeout(() => {
       if (!isAuthenticated) {
         navigate("/");
       }
     }, 200);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, data]);
 
   return (
     <div className="main_account_page">
@@ -170,148 +171,171 @@ const Account = () => {
           </button>
         </div>
       </div>
-      <div className="second_part">
-        <h1>Admin Dashboard</h1>
-        <div className="admin_navbar">
-          <p
-            id="one"
-            onClick={() => {
-              var temp = document.getElementById("one");
-              if (prevClass) {
-                var temp2 = document.getElementById(prevClass);
-                temp2.classList.remove("active_admin_dahboard");
-              }
-              temp.classList.add("active_admin_dahboard");
-              setPrevClass("one");
-            }}
-          >
-            All Users
-          </p>
-          <p
-            id="two"
-            onClick={() => {
-              var temp = document.getElementById("two");
-              if (prevClass) {
-                var temp2 = document.getElementById(prevClass);
-                temp2.classList.remove("active_admin_dahboard");
-              }
-              temp.classList.add("active_admin_dahboard");
-              setPrevClass("two");
-            }}
-          >
-            All Songs
-          </p>
-          <p
-            id="three"
-            onClick={() => {
-              var temp = document.getElementById("three");
-              if (prevClass) {
-                var temp2 = document.getElementById(prevClass);
-                temp2.classList.remove("active_admin_dahboard");
-              }
-              temp.classList.add("active_admin_dahboard");
-              setPrevClass("three");
-            }}
-          >
-            Pending Requests
-          </p>
-        </div>
+      {user?.role == "admin" ? (
+        <div className="second_part">
+          <h1>Admin Dashboard</h1>
+          <div className="admin_navbar">
+            <p
+              id="one"
+              onClick={() => {
+                var temp = document.getElementById("one");
+                if (prevClass) {
+                  var temp2 = document.getElementById(prevClass);
+                  temp2.classList.remove("active_admin_dahboard");
+                }
+                temp.classList.add("active_admin_dahboard");
+                setPrevClass("one");
+              }}
+            >
+              All Users
+            </p>
+            <p
+              id="two"
+              onClick={() => {
+                var temp = document.getElementById("two");
+                if (prevClass) {
+                  var temp2 = document.getElementById(prevClass);
+                  temp2.classList.remove("active_admin_dahboard");
+                }
+                temp.classList.add("active_admin_dahboard");
+                setPrevClass("two");
+              }}
+            >
+              All Songs
+            </p>
+            <p
+              id="three"
+              onClick={() => {
+                var temp = document.getElementById("three");
+                if (prevClass) {
+                  var temp2 = document.getElementById(prevClass);
+                  temp2.classList.remove("active_admin_dahboard");
+                }
+                temp.classList.add("active_admin_dahboard");
+                setPrevClass("three");
+              }}
+            >
+              Pending Requests
+            </p>
+          </div>
 
-        <div className="container">
-          {prevClass == "one" ? (
-            <div className="allUsers">
-              <h2>User Count : {users?.userCount}</h2>
-              <div className="card_blocks">
-                {users?.users?.map((user, key) => (
-                  <div className="user_card" key={key}>
-                    <img src={user?.avatar?.url} alt="" />
-                    <div className="user_info">
-                      <p>Name : {user?.name}</p>
-                      <p>Email : {user?.email}</p>
-                      <p>Role: {user?.role}</p>
-                      <p>Joined On : {user?.createdAt.substr(0, 10)}</p>
-                    </div>
-                    <div className="btns">
-                      <div className="del">
-                        <p>Delete</p>
-                        <DeleteIcon />
+          <div className="container">
+            {prevClass == "one" ? (
+              <div className="allUsers">
+                <h2>User Count : {users?.userCount}</h2>
+                <div className="card_blocks">
+                  {users?.users?.map((user, key) => (
+                    <div className="user_card" key={key}>
+                      <img src={user?.avatar?.url} alt="" />
+                      <div className="user_info">
+                        <p>Name : {user?.name}</p>
+                        <p>Email : {user?.email}</p>
+                        <p>Role: {user?.role}</p>
+                        <p>Joined On : {user?.createdAt.substr(0, 10)}</p>
                       </div>
-                      <select>
-                        <option value="" hidden className="opt">
-                          Update User Role
-                        </option>
+                      <div className="btns">
+                        <div className="del" onClick={() => {}}>
+                          <p>Delete</p>
+                          <DeleteIcon />
+                        </div>
+                        <select
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            dispatch(
+                              makeSinger({
+                                id: user?._id,
+                                role: e.target.value,
+                              })
+                            );
+                            toast("User Updated Successfully");
+                          }}
+                        >
+                          <option value="" hidden className="opt">
+                            Update User Role
+                          </option>
 
-                        {user?.role == "admin" || user?.role == "singer" ? (
-                          <option value="user" className="opt">
-                            User
-                          </option>
-                        ) : (
-                          <></>
-                        )}
-                        {user?.role == "singer" || user?.role == "user" ? (
-                          <option value="admin" className="opt">
-                            Admin
-                          </option>
-                        ) : (
-                          <></>
-                        )}
-                      </select>
+                          {user?.role == "admin" || user?.role == "singer" ? (
+                            <option value="user" className="opt">
+                              User
+                            </option>
+                          ) : (
+                            <></>
+                          )}
+                          {user?.role == "singer" || user?.role == "user" ? (
+                            <option value="admin" className="opt">
+                              Admin
+                            </option>
+                          ) : (
+                            <></>
+                          )}
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+
+            {prevClass == "two" ? (
+              <div className="all_songs">
+                {songs?.allSongs?.map((song, k) => (
+                  <div className="song_card" key={k}>
+                    {/* <img src={song?.coverPoster?.url} alt="" /> */}
+                    <img
+                      src="https://www.udiscovermusic.com/wp-content/uploads/2014/09/Best-Cover-Songs-Facebook-image.jpg"
+                      alt=""
+                    />
+                    <div>
+                      <p>Title : {song?.title}</p>
+                      <div className="artists_container">
+                        <p>Artists :</p>
+                        <div className="artist">
+                          {song?.artist?.map((artist, key) => (
+                            <p key={key}>{artist?.name}</p>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          ) : (
-            <></>
-          )}
-
-          {prevClass == "two" ? (
-            <div className="all_songs">
-              {songs?.allSongs?.map((song, k) => (
-                <div className="song_card" key={k}>
-                  {/* <img src={song?.coverPoster?.url} alt="" /> */}
-                  <img
-                    src="https://www.udiscovermusic.com/wp-content/uploads/2014/09/Best-Cover-Songs-Facebook-image.jpg"
-                    alt=""
-                  />
-                  <div>
-                    <p>Title : {song?.title}</p>
-                    <div className="artists_container">
-                      <p>Artists :</p>
-                      <div className="artist">
-                        {song?.artist?.map((artist, key) => (
-                          <p key={key}>{artist?.name}</p>
-                        ))}
-                      </div>
+            ) : (
+              <></>
+            )}
+            {prevClass == "three" ? (
+              <div className="singer_approval">
+                <h1>Pending Approval : {singerApp?.users?.count} </h1>
+                {singerApp.users?.users?.map((user, key) => (
+                  <div className="user_approval_card" key={key}>
+                    <img src={user?.avatar?.url} alt="" />
+                    <div className="info">
+                      <p>Name : {user?.name}</p>
+                      <p>Email : {user?.email}</p>
+                      <p>Role : {user?.role}</p>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <></>
-          )}
-          {prevClass == "three" ? (
-            <div className="singer_approval">
-              <h1>Pending Approval : {singerApp?.users?.count} </h1>
-              {singerApp.users?.users?.map((user) => (
-                <div className="user_approval_card">
-                  <img src={user?.avatar?.url} alt="" />
-                  <div className="info">
-                    <p>Name : {user?.name}</p>
-                    <p>Email : {user?.email}</p>
-                    <p>Role : {user?.role}</p>
-                  </div>
 
-                  <button>Approve</button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <></>
-          )}
+                    <button
+                      onClick={() => {
+                        dispatch(makeSinger({ id: user?._id, role: "singer" }));
+                        toast("User Updated Successfully !!");
+                      }}
+                    >
+                      Approve
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
+
       <ToastContainer />
     </div>
   );

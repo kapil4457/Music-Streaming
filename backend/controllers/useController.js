@@ -183,9 +183,11 @@ exports.changeUserRole = async (req, res, next) => {
 
     user.role = req.body.role;
     await user.save();
-    await res
-      .status(200)
-      .send({ success: true, message: "User Role Updated successfully !!" });
+    await res.status(200).send({
+      success: true,
+      message: "User Role Updated successfully !!",
+      user,
+    });
   } catch (error) {
     await res.status(400).send({ success: false, message: err.message });
   }

@@ -18,6 +18,12 @@ import {
   SINGER_APPLIED_USERS_REQUEST,
   SINGER_APPLIED_USERS_FAIL,
   SINGER_APPLIED_USERS_SUCCESS,
+  ACCEPT_SINGER_APPLICATION_REQUEST,
+  ACCEPT_SINGER_APPLICATION_SUCCESS,
+  ACCEPT_SINGER_APPLICATION_FAIL,
+  DELETE_USER_FAIL,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_REQUEST,
 } from "../Constants/userConstant";
 
 export const login = (info) => async (dispatch) => {
@@ -100,4 +106,28 @@ export const userAplliedForSingers = () => async (dispatch) => {
       payload: e,
     });
   }
+};
+
+export const makeSinger = (user) => async (dispatch) => {
+  try {
+    dispatch({ type: ACCEPT_SINGER_APPLICATION_REQUEST });
+
+    const config = { headers: { "Content-Type": "application/json" } };
+    const { data } = await axios.put(
+      `/api/v1/admin/change/role/${user.id}`,
+      user,
+      config
+    );
+    dispatch({ type: ACCEPT_SINGER_APPLICATION_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: ACCEPT_SINGER_APPLICATION_FAIL,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+export const deleteUser = (user) => (dispatch) => {
+  try {
+  } catch (e) {}
 };

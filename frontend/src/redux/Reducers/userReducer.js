@@ -18,6 +18,9 @@ import {
   SINGER_APPLIED_USERS_REQUEST,
   SINGER_APPLIED_USERS_SUCCESS,
   SINGER_APPLIED_USERS_FAIL,
+  ACCEPT_SINGER_APPLICATION_REQUEST,
+  ACCEPT_SINGER_APPLICATION_SUCCESS,
+  ACCEPT_SINGER_APPLICATION_FAIL,
 } from "../Constants/userConstant";
 
 export const userReducer = (state = { user: {} }, action) => {
@@ -137,6 +140,31 @@ export const getAllUserWhoAppliedForSinger = (state = {}, action) => {
         users: action.payload,
       };
     case SINGER_APPLIED_USERS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const makeSinger = (state = {}, action) => {
+  switch (action.type) {
+    case ACCEPT_SINGER_APPLICATION_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+
+    case ACCEPT_SINGER_APPLICATION_SUCCESS:
+      return {
+        loading: false,
+        data: action.payload,
+      };
+
+    case ACCEPT_SINGER_APPLICATION_FAIL:
       return {
         loading: false,
         error: action.payload,

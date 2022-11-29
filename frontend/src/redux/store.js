@@ -3,6 +3,7 @@ import { songReducer } from "./Reducers/songReducer";
 import {
   getAllUsers,
   getAllUserWhoAppliedForSinger,
+  makeSinger,
   profileReducer,
   userReducer,
 } from "./Reducers/userReducer";
@@ -14,6 +15,7 @@ export default configureStore({
     allUsers: getAllUsers,
     allSongs: songReducer,
     singerApplication: getAllUserWhoAppliedForSinger,
+    makeSinger: makeSinger,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
