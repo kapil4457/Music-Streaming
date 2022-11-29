@@ -3,8 +3,11 @@ import "./MainCard.css";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+import { addToFav } from "../../redux/actions/songAction";
+import { useDispatch, useSelector } from "react-redux";
 const MainCard = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
   const changeState = () => {
     var temp = document.getElementsByClassName(`${data?._id}`);
     if (isPlaying) {
@@ -19,6 +22,13 @@ const MainCard = ({ data }) => {
       }
     }
     setIsPlaying(!isPlaying);
+  };
+  const addToLikedSong = async () => {
+    const info = {
+      id: data?._id,
+      type: "up",
+    };
+    dispatch(addToFav(info));
   };
   return (
     <div className="main_card_container">
@@ -37,7 +47,7 @@ const MainCard = ({ data }) => {
           {isPlaying ? <PauseIcon /> : <PlayArrowIcon />}
         </button>
         <button>
-          <PlaylistAddOutlinedIcon />
+          <PlaylistAddOutlinedIcon onClick={addToLikedSong} />
         </button>
         <audio src={data?.songLink?.url} id={data?.songLink?.public_url} />
         <div className="music_bars">

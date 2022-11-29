@@ -15,6 +15,10 @@ const songSchema = new mongoose.Schema({
       required: true,
     },
   },
+  likes: {
+    type: Number,
+    required: true,
+  },
   artist: [
     {
       name: {

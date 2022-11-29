@@ -10,6 +10,7 @@ exports.newSong = async (req, res, next) => {
       artist,
       coverPoster,
       language,
+      likes: 0,
       uploaded: Date.now(),
     });
 
@@ -40,24 +41,46 @@ exports.updateLikes = async (req, res, next) => {
   try {
     const song = await Song.findById(req.params.id);
     const user = await User.findById(req.user.id);
-    if (
-      user.likedSongs.includes({
-        id: song._id,
-      })
-    ) {
-      res.status(200).send({
-        success: false,
-        message: "You have already added it to the favourites",
-      });
-      return;
-    }
+    const upOrDown = req.body.type;
 
-    song.likes = song.likes + 1;
-    await song.save();
-    user.likedSongs.push({
-      id: song._id,
-    });
-    await user.save();
+    if (upOrDown == "up") {
+      const temp = user.likedSongs;
+      for (var i = 0; i < temp.length; i++) {
+        if (temp[i]?.id == req.params.id) {
+          res.status(200).send({
+            success: false,
+            message: "You have already added it to the favourites",
+          });
+          return;
+        }
+      }
+
+      song.likes = song.likes + 1;
+      await song.save();
+      user.likedSongs.push({
+        id: song._id,
+      });
+      await user.save();
+    } else {
+      if (
+        user.likedSongs.includes({
+          id: song._id,
+        })
+      ) {
+        const temp = [];
+        user.likedSongs.forEach((song) => {
+          if (song.id !== req.params.id) {
+            temp.push(song);
+          }
+        });
+
+        user.likedSongs = temp;
+        await user.save();
+      }
+
+      song.likes = song.likes - 1;
+      await song.save();
+    }
 
     await res.status(200).json({ success: true, song });
   } catch (err) {

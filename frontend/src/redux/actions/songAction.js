@@ -16,6 +16,9 @@ import {
   GET_LATEST_SONGS_REQUEST,
   GET_LATEST_SONGS_SUCCESS,
   GET_LATEST_SONGS_FAIL,
+  ADD_SONG_TO_FAVOURITES_FAIL,
+  ADD_SONG_TO_FAVOURITES_REQUEST,
+  ADD_SONG_TO_FAVOURITES_SUCCESS,
 } from "../Constants/songConstant";
 
 export const getAllSongs = () => async (dispatch) => {
@@ -92,6 +95,24 @@ export const getLatestSongs = () => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: GET_LATEST_SONGS_FAIL,
+      error: e.response.data.message,
+    });
+  }
+};
+
+export const addToFav = (info) => async (dispatch) => {
+  try {
+    dispatch({ type: ADD_SONG_TO_FAVOURITES_REQUEST });
+    const config = { headers: { "Content-Type": "application/json" } };
+    const data = await axios.put(
+      `/api/v1/update/likes/${info.id}`,
+      info,
+      config
+    );
+    dispatch({ type: ADD_SONG_TO_FAVOURITES_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: ADD_SONG_TO_FAVOURITES_FAIL,
       error: e.response.data.message,
     });
   }
