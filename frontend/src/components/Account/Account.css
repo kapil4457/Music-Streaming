@@ -436,3 +436,129 @@
   border-radius: 50px;
   cursor: pointer;
 }
+
+.main_account_page > .singer_dashboard {
+  display: flex;
+  width: 100%;
+  padding-left: 4rem;
+  gap: 6rem;
+}
+.main_account_page > h2 {
+  padding-left: 4rem;
+  font-size: 3rem;
+  font-weight: 400;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  text-decoration: underline;
+}
+.main_account_page > .singer_dashboard > .navBar {
+  min-height: 45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-top: 2rem;
+}
+
+.main_account_page > .singer_dashboard > .navBar > p {
+  width: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 2.3rem;
+  cursor: pointer;
+  height: 4rem;
+}
+.active_singer_dashboard {
+  font-size: 2rem;
+  background-color: rgb(219, 199, 100);
+  color: black !important;
+  border-radius: 30px;
+}
+
+.no-songs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  color: red;
+  font-size: 4rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_account_page > .singer_dashboard > .content_space > .my-song-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.main_account_page > .singer_dashboard > .content_space {
+  width: 100%;
+}
+
+.main_account_page > .singer_dashboard > .content_space > .create_song_block {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .create_song_block
+  > .create_song_form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding: 4rem;
+  background-color: rgb(219, 199, 100);
+  border-radius: 20px;
+  height: 35rem;
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .create_song_block
+  > .create_song_form
+  > input {
+  border: none;
+  outline: none;
+  height: 3rem;
+  width: 30rem;
+  font-size: 2rem;
+  background-color: transparent;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .create_song_block
+  > .create_song_form
+  > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.main_account_page
+  > .singer_dashboard
+  > .content_space
+  > .create_song_block
+  > .create_song_form
+  > button {
+  height: 3rem;
+  width: 20rem;
+  align-self: center;
+  font-size: 1.5rem;
+  font-weight: 550;
+  background-color: green;
+  border: none;
+  cursor: pointer;
+  color: white;
+  border-radius: 20px;
+}

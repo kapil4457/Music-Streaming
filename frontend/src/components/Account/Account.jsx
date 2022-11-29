@@ -14,13 +14,19 @@ import axios from "axios";
 import { sha1 } from "crypto-hash";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { getAllSongs } from "../../redux/actions/songAction";
+import {
+  createSong,
+  getAllSongs,
+  getAllSongsFromParticularSinger,
+} from "../../redux/actions/songAction";
+import Loader from "../Loader/Loader";
 const Account = () => {
   const { user, isAuthenticated, loading } = useSelector((state) => state.user);
   const { users } = useSelector((state) => state.allUsers);
   const { songs } = useSelector((state) => state.allSongs);
+  const mySongs = useSelector((state) => state.songFromParticularSinger);
   const singerApp = useSelector((state) => state.singerApplication);
   const { data } = useSelector((state) => state.makeSinger);
   const [display, setDisplay] = useState("none");
@@ -28,7 +34,11 @@ const Account = () => {
   const [email, setEmail] = useState(user?.email);
   const [file, setFiles] = useState(null);
   const [prevClass, setPrevClass] = useState("one");
-  const [currentClass, setcurrentClass] = useState("one");
+  const [currentClass1, setcurrentClass1] = useState("my-songs");
+  const [songUpload, setSongUpload] = useState(null);
+  const [coverUpload, setCoverUpload] = useState(null);
+  const [songName, setSongName] = useState("");
+  const [songLang, setSongLang] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleFile = (e) => {
@@ -113,14 +123,103 @@ const Account = () => {
     }
   };
 
+  const handleFile1 = (e) => {
+    const files = Array.from(e.target.files);
+
+    setCoverUpload([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setCoverUpload((old) => [...old, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+  const handleFile2 = (e) => {
+    const files = Array.from(e.target.files);
+
+    setSongUpload([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setSongUpload((old) => [...old, reader.result]);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const createSongFunc = async () => {
+    if (!songName || !coverUpload || !songUpload || !songLang) {
+      toast("Please fill in all the details..");
+      return;
+    }
+    toast("Please wait..It will take some time...");
+
+    //Uploading the album cover
+    const formData = new FormData();
+    formData.append("file", coverUpload);
+    formData.append("upload_preset", "music_cover");
+
+    const d1 = await axios.post(
+      "https://api.cloudinary.com/v1_1/ds82kuoet/image/upload",
+      formData
+    );
+
+    //Uploading track
+    const formData1 = new FormData();
+    formData1.append("file", songUpload);
+    formData1.append("upload_preset", "music_song");
+
+    const d2 = await axios.post(
+      "https://api.cloudinary.com/v1_1/ds82kuoet/video/upload",
+      formData1
+    );
+
+    setTimeout(() => {
+      var songData = {
+        title: songName,
+        songLink: {
+          public_url: d2.data.public_id,
+          url: d2.data.url,
+        },
+        artist: [
+          { name: user?.name, id: user?._id, avatar: user?.avatar?.url },
+        ],
+        language: songLang,
+        coverPoster: {
+          public_id: d1.data.public_id,
+          url: d1.data.url,
+        },
+      };
+
+      dispatch(createSong(songData));
+    }, 7000);
+  };
   useEffect(() => {
     if (user?.role == "admin") {
       dispatch(getAllUsers());
       dispatch(getAllSongs());
       dispatch(userAplliedForSingers());
-
-      var t = document.getElementById(currentClass);
+      var t = document.getElementById(prevClass);
       t.classList.add("active_admin_dahboard");
+    }
+
+    if (user?.role == "singer") {
+      dispatch(
+        getAllSongsFromParticularSinger({ name: user?.name, id: user?._id })
+      );
+      var temp = document.getElementById(currentClass1);
+      temp.classList.add("active_singer_dashboard");
     }
 
     setTimeout(() => {
@@ -132,8 +231,10 @@ const Account = () => {
 
   return (
     <>
-      {!loading ? (
-        <div>loading...</div>
+      {loading ? (
+        <div>
+          <Loader />
+        </div>
       ) : (
         <div className="main_account_page">
           <div className="first_part">
@@ -254,7 +355,6 @@ const Account = () => {
                             </div>
                             <select
                               onChange={(e) => {
-                                console.log(e.target.value);
                                 dispatch(
                                   makeSinger({
                                     id: user?._id,
@@ -350,6 +450,91 @@ const Account = () => {
                 )}
               </div>
             </div>
+          ) : (
+            <></>
+          )}
+
+          {user?.role == "singer" ? (
+            <>
+              <h2>Singer Dashboard</h2>
+              <div className="singer_dashboard">
+                <div className="navBar">
+                  <p
+                    onClick={() => {
+                      var temp = document.getElementById("my-songs");
+                      var temp2 = document.getElementById(currentClass1);
+                      temp2.classList.remove("active_singer_dashboard");
+                      temp.classList.add("active_singer_dashboard");
+                      setcurrentClass1("my-songs");
+                    }}
+                    id="my-songs"
+                  >
+                    My Songs
+                  </p>
+                  <p
+                    id="create-song"
+                    onClick={() => {
+                      var temp = document.getElementById("create-song");
+                      var temp2 = document.getElementById(currentClass1);
+                      temp2.classList.remove("active_singer_dashboard");
+                      temp.classList.add("active_singer_dashboard");
+                      setcurrentClass1("create-song");
+                    }}
+                  >
+                    Create Song
+                  </p>
+                </div>
+                <div className="content_space">
+                  {currentClass1 == "my-songs" ? (
+                    <div className="my-song-list">
+                      {mySongs?.songs?.songs.length == 0 ? (
+                        <div className="no-songs">
+                          You do not have any songs yet
+                        </div>
+                      ) : (
+                        <>
+                          {mySongs?.songs?.songs.map((song) => (
+                            <div>hii</div>
+                          ))}
+                        </>
+                      )}
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {currentClass1 == "create-song" ? (
+                    <div className="create_song_block">
+                      <div className="create_song_form">
+                        <input
+                          type="text"
+                          placeholder="Enter the name of the song"
+                          value={songName}
+                          onChange={(e) => setSongName(e.target.value)}
+                        />
+                        <input
+                          type="text"
+                          placeholder="Enter the language of the song"
+                          value={songLang}
+                          onChange={(e) => setSongLang(e.target.value)}
+                        />
+
+                        <div>
+                          <p>Select the cover for your song</p>
+                          <input type="file" onChange={handleFile1} />
+                        </div>
+                        <div>
+                          <p>Select the song </p>
+                          <input type="file" onChange={handleFile2} />
+                        </div>
+                        <button onClick={createSongFunc}>Create</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              </div>
+            </>
           ) : (
             <></>
           )}
