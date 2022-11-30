@@ -411,10 +411,7 @@ const Account = () => {
                     {songs?.allSongs?.map((song, k) => (
                       <div className="song_card" key={k}>
                         {/* <img src={song?.coverPoster?.url} alt="" /> */}
-                        <img
-                          src="https://www.udiscovermusic.com/wp-content/uploads/2014/09/Best-Cover-Songs-Facebook-image.jpg"
-                          alt=""
-                        />
+                        <img src={song?.coverPoster?.url} alt="" />
                         <div>
                           <p>Title : {song?.title}</p>
                           <div className="artists_container">
