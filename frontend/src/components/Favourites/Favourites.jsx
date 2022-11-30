@@ -13,8 +13,10 @@ import {
   clearErrors,
   getFavouriteSongs,
 } from "../../redux/actions/songAction";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Favourites = () => {
+  const navigate = useNavigate();
   const { user, error, loading } = useSelector((state) => state.user);
   const { favSongs } = useSelector((state) => state.favouriteSongs);
   const [isSongPlaying, setIsSongPlaying] = useState(false);
@@ -28,12 +30,16 @@ const Favourites = () => {
     };
     dispatch(addToFav(info));
     toast("Removed From Favourites");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 2000);
   };
 
   useEffect(() => {
+    if (loading == false && user == null) {
+      toast("Please login to access this page");
+      navigate("/login");
+    }
     if (loading == false) {
       dispatch(getFavouriteSongs({ id: user?._id }));
     }

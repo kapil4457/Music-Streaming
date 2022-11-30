@@ -9,6 +9,7 @@ import Favourites from "./components/Favourites/Favourites";
 import Login from "./components/Login-SignUp/Login";
 import Register from "./components/Login-SignUp/Register";
 import Account from "./components/Account/Account";
+import SearchResult from "./components/searchResult/SearchResult";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<Account />} />
+          <Route path="/search/:name" element={<SearchResult />} />
         </Routes>
         <Footer />
       </div>

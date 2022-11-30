@@ -1,0 +1,18 @@
+.searchRes_main {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-left: 4rem;
+  gap: 4rem;
+}
+
+.searchRes_main > h1 {
+  font-size: 3rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.searchRes_main > .card_block {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}

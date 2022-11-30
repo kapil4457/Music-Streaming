@@ -62,12 +62,10 @@ exports.updateLikes = async (req, res, next) => {
       });
       await user.save();
     } else {
-      var tp = [];
-      for (var i = 0; i < user.likedSongs.length; i++) {
-        if (user.likedSongs[i]._id == song._id) {
-          tp.push(user.likedSongs[i]);
-        }
-      }
+      var tp = user.likedSongs.sort((s) => {
+        return s.id != song._id;
+      });
+
       user.likedSongs = tp;
       await user.save();
     }
@@ -149,6 +147,33 @@ exports.getFavourites = async (req, res, next) => {
     }
     await res.status(200).json({ success: true, favSongs });
   } catch (err) {
+    await res.status(400).send({ success: false, message: err.message });
+  }
+};
+
+exports.search = async (req, res, next) => {
+  try {
+    const songs = await Song.find();
+    var arr = [];
+    const key = req.params.name;
+
+    songs.forEach(async (song) => {
+      const n1 = song.title.toLowerCase();
+      var te = 0;
+      song.artist.forEach((artist) => {
+        const artistName = artist.name.toLowerCase();
+        if (key.includes(artistName) || artistName.includes(key)) {
+          te++;
+        }
+      });
+
+      if (te || n1.includes(key) || key.includes(n1)) {
+        arr.push(song);
+      }
+    });
+
+    await res.status(200).json({ success: true, arr });
+  } catch (e) {
     await res.status(400).send({ success: false, message: err.message });
   }
 };

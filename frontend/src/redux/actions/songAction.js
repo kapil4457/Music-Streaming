@@ -25,6 +25,9 @@ import {
   GET_FAVOURITE_SONGS_REQUEST,
   GET_FAVOURITE_SONGS_SUCCESS,
   GET_FAVOURITE_SONGS_FAIL,
+  SEARCH_RESULT_REQUEST,
+  SEARCH_RESULT_SUCCESS,
+  SEARCH_RESULT_FAIL,
 } from "../Constants/songConstant";
 
 export const getAllSongs = () => async (dispatch) => {
@@ -146,6 +149,21 @@ export const addToFav = (info) => async (dispatch) => {
     dispatch({
       type: ADD_SONG_TO_FAVOURITES_FAIL,
       error: e.response.data.message,
+    });
+  }
+};
+
+export const searchFunc = (info) => async (dispatch) => {
+  try {
+    console.log(info);
+    dispatch({ type: SEARCH_RESULT_REQUEST });
+    const { data } = await axios.get(`/api/v1/search/${info.key}`);
+    console.log(data);
+    dispatch({ type: SEARCH_RESULT_SUCCESS, payload: data });
+  } catch (e) {
+    dispatch({
+      type: SEARCH_RESULT_FAIL,
+      error: e,
     });
   }
 };

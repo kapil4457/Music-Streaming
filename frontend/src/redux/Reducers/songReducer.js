@@ -24,6 +24,9 @@ import {
   GET_FAVOURITE_SONGS_FAIL,
   GET_FAVOURITE_SONGS_REQUEST,
   GET_FAVOURITE_SONGS_SUCCESS,
+  SEARCH_RESULT_FAIL,
+  SEARCH_RESULT_REQUEST,
+  SEARCH_RESULT_SUCCESS,
 } from "../Constants/songConstant";
 
 export const songReducer = (state = {}, action) => {
@@ -228,6 +231,30 @@ export const favouriteSongs = (state = {}, action) => {
       };
 
     case GET_FAVOURITE_SONGS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const searchSong = (state = {}, action) => {
+  switch (action.type) {
+    case SEARCH_RESULT_REQUEST:
+      return {
+        loading: true,
+        ...state,
+      };
+    case SEARCH_RESULT_SUCCESS:
+      return {
+        loading: false,
+        searchRes: action.payload,
+      };
+
+    case SEARCH_RESULT_FAIL:
       return {
         loading: false,
         error: action.payload,

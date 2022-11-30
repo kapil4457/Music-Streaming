@@ -16,32 +16,6 @@ const Header = () => {
   const params = useParams();
   const { user, error } = useSelector((state) => state.user);
 
-  const data = [
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-    {
-      name: "Kurta Pajama",
-      img: "https://i0.wp.com/99lyricstore.com/wp-content/uploads/2020/07/Kurta2BPajama2BSong2BImage2BFeatures2BTony2BKakkar.jpg",
-    },
-  ];
   const [keyword, setKeyWord] = useState("");
   const [res, setRes] = useState([]);
   const navigate = useNavigate();
@@ -50,13 +24,11 @@ const Header = () => {
   };
 
   const searchFunc = (e) => {
-    setKeyWord(e.target.value);
-    var temp = document.getElementById("search-bar");
-    if (e.target.value !== "") {
-      setRes(data);
-    } else if (e.target.value === "") {
-      setRes([]);
+    if (keyword === "") {
+      toast("Please type something to search");
+      return;
     }
+    navigate(`/search/${keyword}`);
   };
 
   const logoutTrigger = async () => {
@@ -85,10 +57,12 @@ const Header = () => {
               type="text"
               id="search-bar"
               value={keyword}
-              onChange={searchFunc}
+              onChange={(e) => {
+                setKeyWord(e.target.value);
+              }}
             />
 
-            <SearchIcon />
+            <SearchIcon onClick={searchFunc} />
           </div>
           <div className="results">
             {res.map((song, key) => (

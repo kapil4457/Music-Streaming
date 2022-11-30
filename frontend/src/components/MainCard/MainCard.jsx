@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 const MainCard = ({ data }) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const { user, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const changeState = () => {
     var temp = document.getElementsByClassName(`${data?._id}`);
@@ -26,6 +27,11 @@ const MainCard = ({ data }) => {
   };
 
   const addToLikedSong = async () => {
+    if (loading == false && user == null) {
+      toast("Please login to access this functionality!!");
+      return;
+    }
+
     const info = {
       id: data?._id,
       type: "up",
