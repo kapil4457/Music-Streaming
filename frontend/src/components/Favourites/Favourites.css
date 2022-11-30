@@ -10,13 +10,7 @@
   display: flex;
   gap: 3rem;
 }
-.favourites_main > .head > button {
-  width: 10rem;
-  font-size: 1.3rem;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-}
+
 .favourites_main > .head > h2 {
   font-size: 3rem;
   font-weight: 450;

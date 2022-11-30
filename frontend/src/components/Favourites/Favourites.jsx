@@ -1,7 +1,6 @@
 import React from "react";
 import "./Favourites.css";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PauseIcon from "@mui/icons-material/Pause";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,11 +15,10 @@ import {
 } from "../../redux/actions/songAction";
 
 const Favourites = () => {
-  const [selectedSongs, setSelectedSongs] = useState(null);
   const { user, error, loading } = useSelector((state) => state.user);
   const { favSongs } = useSelector((state) => state.favouriteSongs);
-  const [isPlayListPaused, setIsPlayListPaused] = useState(true);
   const [isSongPlaying, setIsSongPlaying] = useState(false);
+  const [play, setPlay] = useState("");
   const dispatch = useDispatch();
 
   const removeFromLikedSong = async (data) => {
@@ -30,6 +28,9 @@ const Favourites = () => {
     };
     dispatch(addToFav(info));
     toast("Removed From Favourites");
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   useEffect(() => {
@@ -40,12 +41,11 @@ const Favourites = () => {
       toast(error);
       dispatch(clearErrors());
     }
-  }, [loading, error, favSongs]);
+  }, [loading, error]);
   return (
     <div className="favourites_main">
       <div className="head">
         <h2>Favourites</h2>
-        <button>Play All</button>
       </div>
 
       <div className="favourites_list">
@@ -76,6 +76,7 @@ const Favourites = () => {
                       onClick={() => {
                         setIsSongPlaying(!isSongPlaying);
                         document.getElementById(`temp${key}`).pause();
+                        setPlay(`temp${key}`);
                       }}
                       className="pause"
                     />
