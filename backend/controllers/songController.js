@@ -62,25 +62,18 @@ exports.updateLikes = async (req, res, next) => {
       });
       await user.save();
     } else {
-      if (
-        user.likedSongs.includes({
-          id: song._id,
-        })
-      ) {
-        const temp = [];
-        user.likedSongs.forEach((song) => {
-          if (song.id !== req.params.id) {
-            temp.push(song);
-          }
-        });
-
-        user.likedSongs = temp;
-        await user.save();
+      var tp = [];
+      for (var i = 0; i < user.likedSongs.length; i++) {
+        if (user.likedSongs[i]._id == song._id) {
+          tp.push(user.likedSongs[i]);
+        }
       }
-
-      song.likes = song.likes - 1;
-      await song.save();
+      user.likedSongs = tp;
+      await user.save();
     }
+
+    song.likes = song.likes - 1;
+    await song.save();
 
     await res.status(200).json({ success: true, song });
   } catch (err) {
@@ -149,13 +142,11 @@ exports.getFavourites = async (req, res, next) => {
     const user = await User.findById(req.params.id);
     const favSongs = [];
     for (var i = 0; i < user?.likedSongs?.length; i++) {
-      console.log(user?.likedSongs[i].id);
       const song = await Song.findById(user?.likedSongs[i].id);
       if (song) {
         favSongs.push(song);
       }
     }
-    console.log(favSongs);
     await res.status(200).json({ success: true, favSongs });
   } catch (err) {
     await res.status(400).send({ success: false, message: err.message });

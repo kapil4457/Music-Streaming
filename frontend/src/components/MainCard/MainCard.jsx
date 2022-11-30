@@ -24,6 +24,7 @@ const MainCard = ({ data }) => {
     }
     setIsPlaying(!isPlaying);
   };
+
   const addToLikedSong = async () => {
     const info = {
       id: data?._id,

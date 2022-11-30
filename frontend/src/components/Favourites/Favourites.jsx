@@ -1,211 +1,106 @@
 import React from "react";
 import "./Favourites.css";
-import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PauseIcon from "@mui/icons-material/Pause";
+import { ToastContainer, toast } from "react-toastify";
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getFavouriteSongs } from "../../redux/actions/songAction";
+import {
+  addToFav,
+  clearErrors,
+  getFavouriteSongs,
+} from "../../redux/actions/songAction";
 
 const Favourites = () => {
   const [selectedSongs, setSelectedSongs] = useState(null);
   const { user, error, loading } = useSelector((state) => state.user);
   const { favSongs } = useSelector((state) => state.favouriteSongs);
   const [isPlayListPaused, setIsPlayListPaused] = useState(true);
+  const [isSongPlaying, setIsSongPlaying] = useState(false);
   const dispatch = useDispatch();
-  const data = [
-    {
-      name: "disco",
-      songs: [],
-    },
-    {
-      name: "disco",
-      songs: [],
-    },
-    {
-      name: "disco",
-      songs: [],
-    },
-    {
-      name: "disco",
-      songs: [],
-    },
-    {
-      name: "disco",
-      songs: [
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-        {
-          name: "kabira",
-          img: "https://a10.gaanacdn.com/images/albums/81/2463781/crop_480x480_1554259503_2463781.jpg",
-        },
-      ],
-    },
-    {
-      name: "disco",
-      songs: [
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-      ],
-    },
-    {
-      name: "disco",
-      songs: [
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-      ],
-    },
-    {
-      name: "disco",
-      songs: [
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-        {
-          name: "kabira",
-          img: "",
-        },
-      ],
-    },
-  ];
+
+  const removeFromLikedSong = async (data) => {
+    const info = {
+      id: data?._id,
+      type: "down",
+    };
+    dispatch(addToFav(info));
+    toast("Removed From Favourites");
+  };
+
   useEffect(() => {
     if (loading == false) {
       dispatch(getFavouriteSongs({ id: user?._id }));
     }
-  }, [loading]);
+    if (error) {
+      toast(error);
+      dispatch(clearErrors());
+    }
+  }, [loading, error, favSongs]);
   return (
     <div className="favourites_main">
       <div className="head">
         <h2>Favourites</h2>
-        <button>
-          Create Collection <PlaylistAddIcon />
-        </button>
+        <button>Play All</button>
       </div>
-      <div className="bottom_half">
-        <div className="my_playLists">
-          {data.map((playlist, key) => (
-            <div
-              className="play_list_card"
-              key={key}
-              onClick={() => setSelectedSongs(playlist)}
-            >
-              <div className="leftIcons">
-                <FormatListBulletedIcon />
-                <h2>{playlist.name}</h2>
-              </div>
-              <div className="rightIcons">
-                {isPlayListPaused ? <PlayArrowIcon /> : <PauseIcon />}
-                <DeleteIcon />
-              </div>
-            </div>
-          ))}
-        </div>
 
-        {selectedSongs === null ? (
-          <div className="select_a_playlist">Please select a Playlist</div>
+      <div className="favourites_list">
+        {favSongs?.favSongs?.length == 0 ? (
+          <div className="no-fav">Favourite Song list is Empty</div>
         ) : (
-          <div className="play_list_songs">
-            {selectedSongs.songs.length == 0 ? (
-              <div className="play_list_is_empty">
-                <h2>PlayList is Empty</h2>
-                <p>Add songs to this Playlist to view the songs</p>
+          <>
+            {favSongs?.favSongs?.map((song, key) => (
+              <div className="favCard" key={key}>
+                <img src={song?.coverPoster?.url} alt="" />
+                <div className="info">
+                  <p>
+                    <b>Title </b> {song?.title}
+                  </p>
+                  <p>
+                    <b>Artist </b>
+                    {song?.artist[0]?.name}
+                  </p>
+                  <p>
+                    <b>Language </b>
+                    {song?.language}
+                  </p>
+                </div>
+                <div className="btns">
+                  <audio src={song?.songLink?.url} id={`temp${key}`}></audio>
+                  {isSongPlaying ? (
+                    <PauseIcon
+                      onClick={() => {
+                        setIsSongPlaying(!isSongPlaying);
+                        document.getElementById(`temp${key}`).pause();
+                      }}
+                      className="pause"
+                    />
+                  ) : (
+                    <PlayArrowIcon
+                      onClick={() => {
+                        setIsSongPlaying(!isSongPlaying);
+                        document.getElementById(`temp${key}`).play();
+                      }}
+                      className="play"
+                    />
+                  )}
+                  <DeleteIcon
+                    className="del"
+                    onClick={() => {
+                      removeFromLikedSong(song);
+                    }}
+                  />
+                </div>
               </div>
-            ) : (
-              <div className="playlist_songs_main">
-                {selectedSongs.songs.map((song, key) => (
-                  <div key={key}>
-                    <div className="left_song">
-                      <img src={song.img} alt="" />
-                      <div>
-                        <h2>{song.name}</h2>
-                        <h3>Artist Name</h3>
-                      </div>
-                    </div>
-                    <div className="rightIcons">
-                      <PlayArrowIcon />
-                      <DeleteIcon />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+            ))}
+          </>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };
